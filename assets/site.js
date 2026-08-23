@@ -16,18 +16,13 @@
 })();
 
 // ── NAVBAR SCROLL ───────────────────────────────────────────
+// The header stays visible at all times; scrolling only toggles its
+// translucent/blurred background once the page has scrolled past the top.
 (function () {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
-  let lastY = window.scrollY;
   window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    navbar.classList.toggle('scrolled', y > 40);
-    const navLinks = document.getElementById('navLinks');
-    const menuOpen = navLinks && navLinks.classList.contains('open');
-    if (!menuOpen && y > 140 && y > lastY + 6) navbar.classList.add('nav-hidden');
-    else if (y < lastY - 6 || y <= 140) navbar.classList.remove('nav-hidden');
-    lastY = y;
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 })();
 
