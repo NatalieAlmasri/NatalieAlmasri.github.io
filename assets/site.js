@@ -16,20 +16,31 @@
 })();
 
 // ── NAVBAR SCROLL ───────────────────────────────────────────
-// Hides the header while scrolling down, reveals it again on scroll up
-// (or near the top of the page).
+// Hides the header the instant you scroll down (no tolerance -- any
+// downward movement hides it immediately), and only reveals it again
+// once you've scrolled back up by a real amount, so ordinary trackpad
+// jitter during a downward scroll can't flash it back into view.
 (function () {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
   let lastY = window.scrollY;
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    navbar.classList.toggle('scrolled', y > 40);
-    const navLinks = document.getElementById('navLinks');
-    const menuOpen = navLinks && navLinks.classList.contains('open');
-    if (!menuOpen && y > 140 && y > lastY + 6) navbar.classList.add('nav-hidden');
-    else if (y < lastY - 6 || y <= 140) navbar.classList.remove('nav-hidden');
-    lastY = y;
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      navbar.classList.toggle('scrolled', y > 40);
+      const navLinks = document.getElementById('navLinks');
+      const menuOpen = navLinks && navLinks.classList.contains('open');
+      if (!menuOpen) {
+        if (y <= 20) navbar.classList.remove('nav-hidden');
+        else if (y > lastY) navbar.classList.add('nav-hidden');
+        else if (lastY - y > 40) navbar.classList.remove('nav-hidden');
+      }
+      lastY = y;
+      ticking = false;
+    });
   }, { passive: true });
 })();
 
