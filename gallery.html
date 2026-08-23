@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Natalie Almasri</title>
+  <meta name="description" content="Selected works by Natalie Almasri — sculpture, painting, and drawing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+
+  <style>
+    /* ── GALLERY ─────────────────────────────────────────── */
+    #gallery {
+      padding: 0 clamp(24px, 6vw, 96px) 100px;
+      background: var(--cream);
+    }
+    .gallery-header {
+      display: flex; justify-content: center; align-items: center;
+      margin: 48px 0 60px; flex-wrap: wrap; gap: 24px;
+    }
+    .gallery-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    }
+    .filter-btn {
+      font-family: var(--font-body); font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 7px 18px; border: 1.5px solid var(--parchment);
+      background: transparent; color: var(--ink3);
+      cursor: none; transition: all 0.3s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--lavender3); border-color: var(--lavender3); color: #fff;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .art-card { aspect-ratio: 1 / 1; }
+    .art-card {
+      position: relative; overflow: hidden;
+      background: var(--cream2);
+      cursor: none;
+      transition: transform 0.5s var(--ease-out), box-shadow 0.5s;
+    }
+    .art-card:hover { transform: scale(1.02); box-shadow: 0 20px 60px rgba(139,111,196,0.22); z-index: 2; }
+    .art-thumb {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      font-family: var(--font-body); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(100,80,130,0.5);
+      transition: opacity 0.4s;
+    }
+    .art-card:hover .art-thumb { opacity: 0.85; }
+    .art-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,23,32,0.72) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.4s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px 18px;
+    }
+    .art-card:hover .art-overlay { opacity: 1; }
+    .art-title {
+      font-family: var(--font-display); font-size: 1.15rem;
+      font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 4px;
+    }
+    .art-meta {
+      font-family: var(--font-body); font-size: 0.68rem;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.65);
+    }
+    .art-card .art-thumb { background: var(--cream2); }
+    .art-card .art-thumb img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .art-thumb::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 14px,
+        rgba(255,255,255,0.08) 14px,
+        rgba(255,255,255,0.08) 15px
+      );
+    }
+
+    /* ── LIGHTBOX ────────────────────────────────────────── */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(28,23,32,0.92);
+      backdrop-filter: blur(12px);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px;
+    }
+    #lightbox.open { display: flex; animation: fadeIn 0.4s var(--ease-out); }
+    .lightbox-content {
+      max-width: 700px; width: 100%; position: relative;
+      animation: scaleIn 0.4s var(--ease-out);
+    }
+    .lightbox-img-placeholder {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    .lightbox-info {
+      padding: 24px 0 0;
+    }
+    .lightbox-title {
+      font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 300; color: #fff; margin-bottom: 8px;
+    }
+    .lightbox-desc {
+      font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.65; white-space: pre-line;
+    }
+    .lightbox-close {
+      position: absolute; top: -16px; right: -16px;
+      width: 40px; height: 40px; background: var(--lavender3);
+      border: none; cursor: none; color: #fff;
+      font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .lightbox-close:hover { background: var(--lavender2); transform: rotate(90deg); }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <span class="sig">
+      <img src="uploads/signature-cropped.png" alt="Natalie Almasri signature" />
+    </span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="sculpture">Sculpture</button>
+      <button class="filter-btn" data-filter="painting">Painting</button>
+      <button class="filter-btn" data-filter="drawing">Drawing</button>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="art-card reveal reveal-delay-1" data-category="drawing" onclick="openLightbox(0)">
+      <div class="art-thumb"><img src="uploads/Freedom1.jpeg" alt="Entangled" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Entangled</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(1)">
+      <div class="art-thumb"><img src="uploads/Freedom2.jpeg" alt="Metamorphosis" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Metamorphosis</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(2)">
+      <div class="art-thumb"><img src="uploads/Freedom3.jpeg" alt="Duality" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Duality</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(3)">
+      <div class="art-thumb"><img src="uploads/image:background.jpeg" alt="Fragments of Being" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Fragments of Being</div>
+        <div class="art-meta">Acrylic on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(4)">
+      <div class="art-thumb"><img src="uploads/IMG_0155.jpeg" alt="Grip" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Grip</div>
+        <div class="art-meta">Etching · 2022</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(5)">
+      <div class="art-thumb"><img src="uploads/IMG_2318.jpeg" alt="Liberation" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Liberation</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(6)">
+      <div class="art-thumb"><img src="uploads/IMG_0781 3..jpg" alt="Becoming" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Becoming</div>
+        <div class="art-meta">Oil &amp; Mixed Media · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="painting" onclick="openLightbox(7)">
+      <div class="art-thumb"><img src="uploads/IMG_0709 3.jpeg" alt="Overwhelmed" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Overwhelmed</div>
+        <div class="art-meta">Oil on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="sculpture" onclick="openLightbox(8)">
+      <div class="art-thumb"><img src="uploads/IMG_0064.jpeg" alt="Eye of the Storm" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Eye of the Storm</div>
+        <div class="art-meta">Mosaic · Ceramic Tiles · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(9)">
+      <div class="art-thumb"><img src="uploads/IMG_1897 2.jpg" alt="Resilience" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Resilience</div>
+        <div class="art-meta">Acrylic on Canvas · 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Natalie Almasri</div>
+  <p class="footer-copy">© 2026 Natalie Almasri. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="#" class="social-link" title="Instagram">Ig</a>
+    <a href="#" class="social-link" title="LinkedIn">Li</a>
+    <a href="mailto:nataliekhalmasri@gmail.com" class="social-link" title="Email">✉</a>
+  </div>
+</footer>
+
+<div id="lightbox" role="dialog" aria-modal="true">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+    <div class="lightbox-img-placeholder" id="lightboxImg" style="background:var(--cream2);">
+      <span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(100,80,130,0.4)">Artwork Preview</span>
+    </div>
+    <div class="lightbox-info">
+      <div class="lightbox-title" id="lightboxTitle"></div>
+      <div class="lightbox-desc" id="lightboxDesc"></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.art-card').forEach(card => {
+        const show = f === 'all' || card.dataset.category === f;
+        card.style.opacity = show ? '1' : '0.25';
+        card.style.pointerEvents = show ? 'auto' : 'none';
+      });
+    });
+  });
+
+  const artworks = [
+    { title: 'Entangled', desc: 'Etching · 2023\nA figure wrapped in rope, both bound and held together by it. On the paradox of things that constrain us also giving us form.', img: 'uploads/Freedom1.jpeg' },
+    { title: 'Metamorphosis', desc: 'Etching · 2023\nTwo faces sharing one body, butterflies passing between them — on the transformation that happens when you learn to see yourself twice.', img: 'uploads/Freedom2.jpeg' },
+    { title: 'Duality', desc: 'Etching · 2023\nA face split between silence and speech. The woman who laughs while the other watches. On the selves we carry simultaneously.', img: 'uploads/Freedom3.jpeg' },
+    { title: 'Fragments of Being', desc: 'Acrylic on 9 Canvases · 2024\nA face assembled across nine separate panels — identity as something that must be pieced together, never whole from a single vantage point.', img: 'uploads/image:background.jpeg' },
+    { title: 'Grip', desc: 'Etching · 2022\nA massive hand holding a tiny human figure. On powerlessness, control, and the strange intimacy of being held against your will.', img: 'uploads/IMG_0155.jpeg' },
+    { title: 'Liberation', desc: 'Etching · 2023\nBirds erupting from a woman\'s head like thoughts finally given permission to leave. On the moment something becomes too large to keep inside.', img: 'uploads/IMG_2318.jpeg' },
+    { title: 'Becoming', desc: 'Oil & Mixed Media · 2024\nA silhouette crowned with butterflies in autumn colours, embroidered patterns trailing her robe. On the quiet becoming that happens when no one is watching.', img: 'uploads/IMG_0781 3..jpg' },
+    { title: 'Overwhelmed', desc: 'Oil on Canvas · 2024\nA small figure draped over the edge of an enormous coffee cup. On ordinary objects that contain the entirety of our exhaustion.', img: 'uploads/IMG_0709 3.jpeg' },
+    { title: 'Eye of the Storm', desc: 'Mosaic · Ceramic Tiles · 2023\nA head built from broken ceramic fragments — blue sea, red crescent, grey sky. On assembling a self from shattered material, piece by piece.', img: 'uploads/IMG_0064.jpeg' },
+    { title: 'Resilience', desc: 'Acrylic on 4 Canvases · 2022\nA daisy in full bloom against an uncompromising black — the insistence of softness in a hard world. The flower that keeps opening anyway.', img: 'uploads/IMG_1897 2.jpg' }
+  ];
+  function openLightbox(i) {
+    const lb = document.getElementById('lightbox');
+    const art = artworks[i];
+    const imgEl = document.getElementById('lightboxImg');
+    imgEl.style.background = '#1C1720';
+    imgEl.innerHTML = art.img
+      ? `<img src="${art.img}" alt="${art.title}" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      : `<span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3)">Artwork Preview</span>`;
+    document.getElementById('lightboxTitle').textContent = art.title;
+    document.getElementById('lightboxDesc').textContent = art.desc;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lightbox').addEventListener('click', function (e) {
+    if (e.target === this) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

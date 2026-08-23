@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Straw Weaving — An Expanded Study · Natalie Almasri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --cream:#FAF7F2; --cream2:#F3EDE3; --parchment:#EDE3D5;
+      --lavender:#C8B4E8; --lavender2:#B09AD8; --lavender3:#8B6FC4;
+      --ink:#1C1720; --ink2:#3A2F45; --ink3:#6B5F7A;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --ease-out:cubic-bezier(0.16,1,0.3,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--ink);font-family:var(--font-body);font-weight:300;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--cream2);}
+    ::-webkit-scrollbar-thumb{background:var(--lavender2);border-radius:2px;}
+    .article-nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,5vw,64px);background:rgba(250,247,242,0.88);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(200,180,232,0.25);transition:transform 0.45s var(--ease-out);}
+    .article-nav.nav-hidden{transform:translateY(-100%);}
+    .back-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color 0.3s,gap 0.3s var(--ease-out);}
+    .back-link:hover{color:var(--lavender3);gap:14px;}
+    .article-nav .brand{grid-column:2;justify-self:center;display:flex;align-items:center;height:42px;text-decoration:none;}
+    .article-nav .brand img{height:100%;width:auto;display:block;}
+    .article-hero{padding:calc(64px + 60px) clamp(20px,5vw,64px) 0;max-width:860px;margin:0 auto;text-align:center;}
+    .article-tag{font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--lavender3);margin-bottom:24px;opacity:0;animation:fadeUp 0.9s 0.1s var(--ease-out) forwards;}
+    .article-title{font-family:var(--font-display);font-weight:300;font-size:clamp(2.6rem,6vw,5rem);line-height:1.02;color:var(--ink2);margin-bottom:12px;opacity:0;animation:fadeUp 0.9s 0.25s var(--ease-out) forwards;}
+    .article-subtitle{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.3rem,3vw,2rem);color:var(--lavender3);margin-bottom:28px;opacity:0;animation:fadeUp 0.9s 0.35s var(--ease-out) forwards;}
+    .article-meta{font-family:var(--font-body);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:48px;opacity:0;animation:fadeUp 0.9s 0.45s var(--ease-out) forwards;}
+    .article-intro{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.2rem,2.4vw,1.6rem);line-height:1.55;color:var(--ink3);max-width:640px;margin:0 auto 56px;opacity:0;animation:fadeUp 0.9s 0.55s var(--ease-out) forwards;}
+    .hero-image{width:100%;max-width:1000px;margin:0 auto 72px;aspect-ratio:16/9;overflow:hidden;background:var(--cream2);opacity:0;animation:fadeIn 1.2s 0.5s var(--ease-out) forwards;}
+    
+    .article-body{max-width:900px;margin:0 auto;padding:0 clamp(24px,6vw,40px) 80px;}
+    .article-foot{border-top:1px solid var(--parchment);max-width:860px;margin:0 auto;padding:40px clamp(20px,5vw,24px) 80px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+    .foot-link{text-decoration:none;max-width:46%;}
+    .foot-link.next{text-align:right;margin-left:auto;}
+    .foot-dir{font-family:var(--font-body);font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:block;}
+    .foot-title{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--ink2);line-height:1.2;transition:color 0.3s;}
+    .foot-link:hover .foot-title{color:var(--lavender3);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @media(max-width:600px){.article-nav .brand{display:none;}.foot-link{max-width:100%;}}
+    /* long-form reading */
+    .article-p{font-family:var(--font-body);font-size:1rem;line-height:1.8;color:var(--ink2);margin-bottom:22px;text-wrap:pretty;}
+    .article-lead-p::first-letter{font-family:var(--font-display);font-size:4rem;font-weight:500;float:left;line-height:0.78;padding:8px 16px 0 0;color:var(--lavender3);}
+    .article-h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.4vw,2.4rem);font-weight:500;color:var(--ink2);line-height:1.12;margin:64px 0 18px;}
+    .article-h3{font-family:var(--font-display);font-style:italic;font-size:clamp(1.3rem,2.4vw,1.6rem);font-weight:500;color:var(--lavender3);margin:42px 0 12px;}
+    .article-h4{font-family:var(--font-body);font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin:32px 0 10px;}
+    .article-ul{margin:8px 0 26px;padding-left:24px;}
+    .article-ul li{font-family:var(--font-body);font-size:1rem;line-height:1.7;color:var(--ink2);margin-bottom:10px;padding-left:6px;}
+    .article-ul li::marker{color:var(--lavender3);}
+    .article-quote{margin:40px 0;padding:6px 0 6px 30px;border-left:3px solid var(--lavender3);font-family:var(--font-display);font-style:italic;font-size:1.45rem;line-height:1.5;color:var(--ink2);}
+    .article-figure-img{margin:48px 0;}
+    .article-figure-img img{width:100%;height:auto;display:block;border-radius:4px;}
+    .article-figure{margin:52px 0 8px;}
+    
+    .article-figcaption{font-family:var(--font-body);font-size:0.74rem;letter-spacing:0.04em;color:var(--ink3);text-align:center;margin-top:12px;font-style:italic;}
+  .img-placeholder{width:100%;height:100%;background:linear-gradient(135deg, #C8B4E8 0%, #E8C4C4 40%, #F3EDE3 70%, #A8C4A2 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}.img-placeholder::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(255,255,255,0.08) 14px,rgba(255,255,255,0.08) 15px);}.img-placeholder .cap{position:relative;z-index:1;font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(80,60,110,0.55);}
+  </style>
+</head>
+<body>
+  <nav class="article-nav">
+    <a href="writing.html" class="back-link">← Back to Writing</a>
+    <a href="index.html" class="brand"><img src="uploads/signature-cropped.png" alt="Natalie Almasri" /></a>
+  </nav>
+
+  <header class="article-hero" data-screen-label="Article: Straw Weaving">
+    <p class="article-tag">Craft Research</p>
+    <h1 class="article-title">Straw Weaving</h1>
+    <p class="article-subtitle">An Expanded Study</p>
+    <p class="article-meta">Research · 2026</p>
+    <p class="article-intro">An expanded study of women's craft in Northern Palestine, with straw weaving at its heart.</p>
+  </header>
+
+  <div class="hero-image">
+    <img src="uploads/straw-weaving-cover.jpg" alt="Straw Weaving cover" style="width:100%;height:100%;object-fit:cover;display:block;" />
+  </div>
+
+  <article class="article-body">
+      <h2 class="article-h2">1. Introduction and Scope of the Expansion</h2>
+      <p class="article-p article-lead-p">This expansion deepens in straw weaving as the central case, giving it the extended treatment its cultural weight and current endangerment warrant. It strengthens the evidence base with additional sources: the ethnographic corpus of Tawfiq Canaan and Gustaf Dalman, Salim Tamari's critical work on Palestinian nativist ethnography, and contemporary reporting from Haaretz, Handmade Palestine, Sindyanna of Galilee, Nöl Collective, and MIFTAH. Finally, it sharpens the geography by disaggregating “northern Palestine” into its component sub-regions (the Galilee, Marj Ibn ʻAmir/Jezreel edge, the Jenin and Tubas highlands, the Tulkarm coastal slope, and the northern West Bank refugee camps), each with distinct craft ecologies.</p>
+      <p class="article-p">The period covered by this expansion — early 2025 through early 2026 — is also one of acute crisis. The “Iron Wall” military operation launched on 21 January 2025 devastated the very refugee camps that host several of the most active women-led cooperatives described in the original report. Any honest account of the northern craft economy must now place these events at the centre of the analysis, not in a footnote.</p>
+      <h2 class="article-h2">2. Geographic Framing: What Counts as “Northern Palestine”</h2>
+      <p class="article-p">“Northern Palestine” is not an administrative unit. For the purposes of craft history, it can usefully be defined as the zone stretching from the Galilee in the north, southwards through Marj Ibn ʻAmir (the Jezreel Valley edge), into the northern West Bank governorates of Jenin, Tubas, Tulkarm, and Nablus. Each sub-region has its own craft profile:</p>
+      <ul class="article-ul">
+        <li>The Galilee (Nazareth, Safad, Kufr Manda, Kaukab Abu al-Hija, Najaf and surrounding villages) was historically the textile heartland and a stronghold of wheat-stalk weaving. Cotton was grown locally, with indigo and sumac dyes; silk was imported from Syria.</li>
+        <li>The Jenin governorate is today the agricultural powerhouse of the West Bank — with 25.6 percent of the country's cultivated land, the highest share in Palestine, and 152,000 dunums under olives (also the national lead). Its villages remain important centres of straw and olive-branch weaving, and Jenin Refugee Camp is a major site of women's cooperative activity.</li>
+        <li>Tubas and the Northern Jordan Valley hold a smaller but distinct craft economy shaped by Bedouin and semi-nomadic communities, where wool and goat-hair weaving traditions overlap with straw work.</li>
+        <li>Tulkarm and Qalqilya on the coastal slope have historically blended agricultural craft production with access to coastal trade routes. Tulkarm governorate cultivates 34 percent of its surface area, making it one of the densest agricultural zones and a steady supplier of wheat straw.</li>
+        <li>Nablus anchors the southern edge of the region and remains synonymous with Nabulsi olive oil soap — a craft in which women's labour was and is central at the household and small-workshop scale.</li>
+      </ul>
+      <p class="article-p">Framing these areas as one region is analytically useful because the craft knowledge does not respect the Green Line. Weavers in Kaukab Abu al-Hija (inside present-day Israel) and Yamun (Jenin governorate) share techniques, motifs, and even plant-material vocabularies. The political fragmentation is real and consequential, but it is superimposed on a single older cultural geography.</p>
+      <h2 class="article-h2">3. Historical and Ethnographic Background</h2>
+      <p class="article-p">The scholarly foundation for studying northern Palestinian women's crafts was laid in the late Ottoman and British Mandate periods. Four bodies of work remain indispensable.</p>
+      <p class="article-p">Tawfiq Canaan (1882–1964) was the pre-eminent Palestinian ethnographer of his generation. A physician by training, he published roughly forty-five folklore articles, many in the Journal of the Palestine Oriental Society between 1920 and 1938, and left books including Mohammedan Saints and Sanctuaries in Palestine (1927) and The Palestine Arab House: Its Architecture and Folklore (1933). His assembled collection of some 1,400 amulets and ethnographic objects — including woven and plaited items used in ritual contexts — is now housed at Birzeit University. Canaan understood Palestinian material culture as a living continuum stretching back through Canaanite, Nabatean, and Arab strata, rather than a frozen biblical tableau.</p>
+      <p class="article-p">Gustaf Dalman (1855–1941) produced the seven-volume Arbeit und Sitte in Palästina (Work and Customs in Palestine, 1928–1942), the most granular survey ever made of Palestinian rural work — including extensive sections on weaving, carpet-making, and plaited goods drawn partly from informants in the Jerusalem circle around Tawfiq Canaan's father, Rev. Beshara Canaan.</p>
+      <p class="article-p">Salim Tamari has provided the most important critical re-reading of this literature, including the essays “Lepers, Lunatics and Saints: The Nativist Ethnography of Tawfiq Canaan and His Jerusalem Circle” (Jerusalem Quarterly, 2004) and “Tawfiq Canaan and Gustav Dalman: German Orientalism and the Native Informant” (Jerusalem Quarterly, 2025). Tamari's work cautions against reading early twentieth-century ethnography as neutral record — but also defends its empirical richness, especially on regional variation in peasant lore.</p>
+      <p class="article-p">The Ottoman and early Mandate record shows northern Palestine as a dense craft landscape. Al-Majdal alone, on the southern coastal plain, had more than 500 active looms up to the mid-nineteenth century; in the north, Nazareth, Safad, and the Galilee villages supplied both local and regional markets. Canaan's father Beshara Canaan served as Dalman's informant on specifically these topics: weaving and carpet-making (Dalman, Arbeit und Sitte items 2392, 2567, 2653), embroidery (2591), and the gendered division of rural labour. Nablus's soap industry, meanwhile, had grown from Roman roots to thirty factories at its nineteenth-century peak, according to the documentation preserved by the Palestinian Soap Cooperative.</p>
+      <h2 class="article-h2">4. Straw Weaving (al-Khaws): An In-Depth Study</h2>
+      <p class="article-p">Straw weaving is the oldest continuously practised women's craft in northern Palestine. Unlike textile weaving on looms (which required capital investment, fixed premises, and often male involvement in the most specialized stages) straw weaving could be done by any woman, in any courtyard, with materials gathered free from the land. For that reason it was historically the most democratic of the crafts, and today the most endangered. The section below expands each dimension of the practice.</p>
+      <h3 class="article-h3">4.1 Terminology and Materials</h3>
+      <p class="article-p">The Arabic term for straw work is al-khaws, and its practitioner is al-khawwas (masculine) or al-khawwasa (feminine). The finished forms have distinct names:</p>
+      <ul class="article-ul">
+        <li>Tabaq (pl. atbaq) — a shallow woven tray, typically 20–60 cm in diameter, used for serving bread and food or hung as wall decoration. The tabaq is the signature object of Galilean straw work.</li>
+        <li>Saniyya — a larger, often deeper tray; the word is more often used in central and southern Palestine but is attested in the north as well.</li>
+        <li>Salla (pl. silal) — a basket with raised sides, used for carrying harvested produce, storing grain, and transporting bread to communal ovens.</li>
+        <li>Quffa — a large, sturdier storage basket, often lined, used for grain or textiles.</li>
+      </ul>
+      <p class="article-p">The materials used in the north are tightly bound to the local agricultural calendar. The dominant fibre is qash — wheat stalks, harvested in late May or June after the grain is threshed. Wheat remains the leading field crop in Palestine, accounting for 46.5 percent of the total field-crop area (about 101,000 dunums as of the 2020/2021 agricultural year, per PCBS). Jenin governorate leads, and this agricultural centrality is part of why Jenin and its surrounding villages remain the northern stronghold of wheat-straw weaving.</p>
+      <p class="article-p">Beyond wheat, northern weavers historically used twigs and slender branches of olive, almond, and terebinth (butm) gathered from trees on or near the family's own land — one of the defining characteristics of a place-rooted craft. Jenin governorate alone contains roughly 152,000 dunums under olives, the highest concentration in Palestine, which directly sustains the supply of pruning by-products used by weavers. Date-palm fronds are used in the Jordan Valley and among artisans with Gazan or southern coastal roots; in the northern Galilee, weavers such as those at Sindyanna of Galilee's Kufr Manda workshop work primarily with date-tree fronds brought in from other regions, supplemented with olive and willow for decorative accents.</p>
+      <p class="article-p">Colour is achieved through natural dyes — historically indigo, sumac, pomegranate rind, henna, onion skin, and walnut hull — each associated with a particular palette of blues, reds, browns, and yellows. The geometric patterns of a finished tabaq are typically built up in alternating dyed and undyed coils, producing the characteristic radiating star and diamond motifs that identify a piece as northern Palestinian.</p>
+      <h3 class="article-h3">4.2 Techniques and Forms</h3>
+      <p class="article-p">The dominant structural technique is coiled basketry. A bundle of wheat stalks is held and compressed into a continuous rope-like core, which is then spiralled outward from the centre. At each turn, the weaver uses a needle or awl to draw a thinner binding material — typically finer strips of grass, split palm frond, or raffia — through the coil below, stitching the new coil onto it. The tightness of the stitch and the regularity of the coil are what separate an apprentice's tray from a master's.</p>
+      <p class="article-p">The process is slow. A mid-size tabaq (40 cm) requires between 20 and 40 hours of work for an experienced weaver, excluding material preparation. Preparation itself — harvesting the wheat, letting it dry in the sun for several days, stripping the nodes, soaking, dyeing, re-drying — can take two weeks for a batch sufficient for a few trays. The craft therefore has a characteristic seasonality: preparation in early summer after the grain harvest, production through the autumn and winter, sale in spring or through the year-round fair-trade pipeline.</p>
+      <p class="article-p">Technique is transmitted almost entirely through direct apprenticeship. The coordination of hand tension, coil thickness, and stitch spacing is not easily reduced to written instruction; it is what ethnographers call tacit or embodied knowledge. When a master weaver dies without apprentices, her entire repertoire — the specific way she tucked a fibre, the speed at which she introduced a colour change — is lost. This is the core reason the endangerment of straw weaving is more acute than the statistics alone suggest.</p>
+      <h3 class="article-h3">4.3 Geographic Concentration in the North</h3>
+      <p class="article-p">Three sub-regional clusters can be identified in contemporary northern straw weaving:</p>
+      <p class="article-p">Galilee cluster. Centred on Kufr Manda in the Lower Galilee, where Sindyanna of Galilee and the MAAN Workers Association run a joint basket-weaving project active since the late 2000s. The workshop employs around ten women regularly, meeting twice weekly, and hosts visiting groups. Kaukab Abu al-Hija is another Galilee village represented in the programme — the home of Fatmah Haj (Um Ihab), who rejoined the craft at age 71 after retiring from teaching. An Ein Dor Archaeological Museum exhibit in 2023 featured trays made by Mohammed Zeitoun of Najaf, who learnt the craft from his grandmother — a Galilee woman who embodied exactly the transmission line now broken in most villages.</p>
+      <p class="article-p">Jenin cluster. Spread across the villages of Jenin governorate, where wheat straw is abundant and olive pruning yields the secondary fibres. The cluster feeds both the Jenin refugee-camp cooperatives (where it intersects with felting, silk-screening, and pottery programmes documented in the original report) and the wider Darzah-supported artisan network, which works with more than 30 female artisans in the camp. Since the January 2025 Iron Wall operation — which has forced more than 42,000 residents from their camps according to UNRWA, including 21,000 from Jenin Camp alone — this cluster has been severely disrupted.</p>
+      <p class="article-p">Salfit / Jordan Valley extension. Although technically central rather than northern, Salfit deserves mention as a connected cluster: Salma Bozeye of Bait Al Turath, working with olive and wheat straw, sources all her materials from women in the Salfit region and has spent more than sixteen years training a younger generation. Her model — training younger women locally and selling to diaspora markets — is the template fair-trade organizations are attempting to replicate in the Galilee and Jenin.</p>
+      <h3 class="article-h3">4.4 The Gendered Economy of Straw Weaving</h3>
+      <p class="article-p">Straw weaving is one of the very few productive activities historically coded as almost exclusively female. Several features explain this. It required no capital beyond a needle. It could be interrupted: a woman could put down a coil to attend to a child or a pot, and pick it up again without loss. It could be done in the courtyard or under a tree, compatible with the rhythms of rural domestic life. And its products — bread trays, storage baskets, wedding gifts — were embedded in precisely the domestic economy women controlled.</p>
+      <p class="article-p">The contemporary economic significance of the craft must therefore be read against the broader statistical picture: female labour force participation in Palestine of 17.2 percent, women's wages at roughly 80 percent of men's in the West Bank and Gaza, and more than 20 percent of informal household projects owned by women. When a woman in a northern village sells a tabaq, it is often the single largest income event she will generate in that month, and the only one of which she is the sole author.</p>
+      <p class="article-p">Income from straw work is modest in absolute terms. A Kufr Manda basket sells in boutique outlets in Israel and abroad for between the equivalent of 30 and 150 US dollars depending on size and complexity, of which perhaps half reaches the weaver. The Baitutie programme noted in the original report — 23 women-led cooperatives, 923 members, combined 2016 sales of $318,000 — illustrates that even when aggregated at scale, the per-woman annual income from craft cooperatives averages a few hundred dollars. The value of the craft economy is therefore not that it pulls women out of poverty (it does not, reliably) but that it creates a first, autonomous, dignified income stream.</p>
+      <p class="article-p">Testimonial evidence consistently corroborates this. Salma Bozeye in Salfit reports that craft income has supported three of her daughters through higher education — one in nursing, one in English literature, one in plastic arts. In the Jenin and Tulkarm camps, surveys conducted by MIFTAH in 2025 (covering 300 displaced women, of whom 145 were from Jenin camps, 142 from Tulkarm and Nur Shams) show that where women had developed craft-based income before displacement, they were substantially more likely to re-establish some livelihood in their displacement locations; where they had not, they reported a much steeper descent into dependency.</p>
+      <h3 class="article-h3">4.5 Decline, Endangerment, and Revival</h3>
+      <p class="article-p">The indicators of endangerment are unambiguous. The Haaretz profile of Mohammed Zeitoun reports that he is “the only craftsperson in Israel who still weaves using wheat stems,” a striking claim but one consistent with Sunbula's own assessment that declining wheat cultivation and rising wheat-straw prices have threatened the economic viability of basketry. Handmade Palestine describes straw tray weaving explicitly as “a dying art in Palestine.” Sindyanna of Galilee notes that the Kufr Manda baskets cannot compete on price with cheap imports from Africa and the Far East, and have to be routed through niche boutique, gallery, and fair-trade channels to remain viable.</p>
+      <p class="article-p">The pressures are cumulative:</p>
+      <ul class="article-ul">
+        <li>Demographic: The practising population is predominantly older than 60. Fatmah Haj in Kufr Manda is 71; the named weavers in the Handmade Palestine catalogue — Om Yusef, Fatima Om Mansur — are grandmothers teaching granddaughters one-on-one, an approach that does not scale.</li>
+        <li>Material: Wheat cultivation has declined nationally — PCBS records a drop of 24,700 dunums in total field-crop area between 2009/2010 and 2020/2021 — and land confiscations plus environmental pressures have reduced access to wild terebinth and almond.</li>
+        <li>Economic: Mass-produced plastic, metal, and imported woven goods have displaced straw products from their original functional roles, pushing them into a purely ornamental market where they compete on craft quality rather than utility.</li>
+        <li>Political: Checkpoints and military operations disrupt the movement of materials and finished goods. The Iron Wall operation of 21 January 2025 onwards caused direct destruction of workshop spaces in the Jenin, Tulkarm, and Nur Shams camps and displaced the artisans who worked in them.</li>
+      </ul>
+      <p class="article-p">Against this, a revival network is visible. Sindyanna of Galilee in Kufr Manda, the Zeitoun workshop and Ein Dor Museum exhibit in the Lower Galilee, Salma Bozeye's Bait Al Turath in Salfit, Sunbula's basketry catalogue in Jerusalem, Handmade Palestine's online platform, and Darzah's work in Jenin camp all constitute a loose but real ecosystem. The critical gap remains the apprenticeship pipeline: none of these organizations alone can sustain the ten-to-twenty-year transmission horizon that a master weaver's training demands.</p>
+      <h2 class="article-h2">5. Other Major Crafts: Updated Notes</h2>
+      <p class="article-p">The original report's treatment of textile weaving, soap making, pottery, jewelry, and felting/silk-screening stands; a few focused additions strengthen it.</p>
+      <p class="article-p">Textile (loom) weaving. Nöl Collective's documentation adds important detail: al-Majdal alone had 500-plus active looms by the mid-nineteenth century, and the Galilee supplied the indigo and sumac dyes used in costume fabrics across Palestine. Nöl is now working directly with small family businesses and women's cooperatives in the West Bank and Gaza to reconstruct specific weaves.</p>
+      <p class="article-p">Olive oil soap making. The historical peak in Nablus is now documented at thirty factories in the nineteenth century, reduced to roughly five continuously operating as of 2022. Women's role at the household and small-workshop scale — managing the cooking, cutting, and stamping — is best captured in the Palestinian Soap Cooperative's own documentation of family-run soap houses.</p>
+      <p class="article-p">Jewelry. Canaan's amulet collection includes many jewelry-class objects — silver pendants, beaded protective pieces, talismanic rings — providing a direct link between the early-twentieth-century rural repertoire and the contemporary cooperative-based revival supported by Sunbula.</p>
+      <p class="article-p">Felting and silk-screening. These remain the most recently introduced crafts, and are particularly important in the Jenin refugee-camp programmes — precisely the locations most disrupted in 2025–2026. Their lower skill barrier makes them rapid-entry for newly displaced women, and they function as gateways into the more traditional crafts.</p>
+      <h2 class="article-h2">6. Expanded Statistical Overview</h2>
+      <p class="article-p">The tables below integrate new sources — PCBS agricultural census 2020/2021, UNRWA and OCHA 2025 displacement updates, MIFTAH 2025 survey — into the original statistical picture.</p>
+      <h4 class="article-h4">6.1 Women's Participation and Craft Economy (Updated)</h4>
+      <p class="article-p">Indicator</p>
+      <p class="article-p">Figure</p>
+      <p class="article-p">Female labour force participation (Palestine)</p>
+      <p class="article-p">17.2 percent</p>
+      <p class="article-p">Female labour force participation (Arab region average)</p>
+      <p class="article-p">25 percent</p>
+      <p class="article-p">Female labour force participation (global average)</p>
+      <p class="article-p">51 percent</p>
+      <p class="article-p">Women's wages as share of men's (West Bank and Gaza)</p>
+      <p class="article-p">roughly 80 percent</p>
+      <p class="article-p">Share of informal household projects owned by women</p>
+      <p class="article-p">more than 20 percent</p>
+      <p class="article-p">Women's entrepreneurship as share of women's employment</p>
+      <p class="article-p">roughly 15 percent</p>
+      <p class="article-p">Industrial sector (inclusive of handicrafts) share of GDP</p>
+      <p class="article-p">13.1 percent</p>
+      <p class="article-p">Manufacturing workforce in Palestine (2022)</p>
+      <p class="article-p">more than 139,000</p>
+      <h4 class="article-h4">6.2 Northern West Bank: Agriculture Underpinning Craft Materials (PCBS 2020/2021)</h4>
+      <p class="article-p">Governorate</p>
+      <p class="article-p">Cultivated Share of Land</p>
+      <p class="article-p">Notes Relevant to Craft Materials</p>
+      <p class="article-p">Jenin</p>
+      <p class="article-p">49.4 percent (highest in Palestine)</p>
+      <p class="article-p">152,000 dunums under olives (national lead); 25.6 percent of all national cultivated land</p>
+      <p class="article-p">Tulkarm</p>
+      <p class="article-p">34.0 percent</p>
+      <p class="article-p">Steady wheat-straw supplier; coastal slope ecology</p>
+      <p class="article-p">Qalqilya</p>
+      <p class="article-p">35.1 percent</p>
+      <p class="article-p">Significant wheat and mixed field crops</p>
+      <p class="article-p">Tubas and Northern Valleys</p>
+      <p class="article-p">Moderate</p>
+      <p class="article-p">Jordan Valley dates and palm fronds (7,625 dunums of potatoes, 27,200 dunums of dates across Jericho and Al-Aghwar)</p>
+      <p class="article-p">Nablus</p>
+      <p class="article-p">Moderate</p>
+      <p class="article-p">Olive pruning supplies basketry secondary fibres; soap industry anchor</p>
+      <h4 class="article-h4">6.3 Craft Cooperatives and Fair-Trade Aggregates</h4>
+      <p class="article-p">Indicator</p>
+      <p class="article-p">Figure</p>
+      <p class="article-p">Women's cooperatives supported by Sunbula Fair Trade</p>
+      <p class="article-p">50 groups</p>
+      <p class="article-p">Craft categories in Sunbula catalogue (incl. basketry)</p>
+      <p class="article-p">at least 4</p>
+      <p class="article-p">Women-led cooperatives in the Baitutie programme</p>
+      <p class="article-p">23</p>
+      <p class="article-p">Total members in the Baitutie programme</p>
+      <p class="article-p">923</p>
+      <p class="article-p">Baitutie direct sales to the public (2016)</p>
+      <p class="article-p">USD 113,000</p>
+      <p class="article-p">Baitutie export revenue (2016)</p>
+      <p class="article-p">USD 205,000</p>
+      <p class="article-p">Baitutie combined sales 2016</p>
+      <p class="article-p">USD 318,000</p>
+      <p class="article-p">Artisans working with Darzah in Jenin Refugee Camp</p>
+      <p class="article-p">more than 30</p>
+      <p class="article-p">Women in Kufr Manda Sindyanna basket workshop (Galilee)</p>
+      <p class="article-p">around 10 active regularly</p>
+      <p class="article-p">Years Salma Bozeye (Salfit) has been weaving professionally</p>
+      <p class="article-p">more than 16</p>
+      <h4 class="article-h4">6.4 Northern West Bank Displacement, January 2025 – April 2025</h4>
+      <p class="article-p">Indicator</p>
+      <p class="article-p">Figure</p>
+      <p class="article-p">Total displaced from northern West Bank camps (UNRWA, mid-2025)</p>
+      <p class="article-p">more than 42,000</p>
+      <p class="article-p">Displaced from Jenin Refugee Camp and surroundings</p>
+      <p class="article-p">21,000 (30 percent of the camp and city population)</p>
+      <p class="article-p">Displaced from Tulkarm and Nur Shams camps</p>
+      <p class="article-p">roughly 19,000</p>
+      <p class="article-p">Palestinians killed in Iron Wall operation (21 Jan – 30 June 2025)</p>
+      <p class="article-p">126, including 23 children and 5 women</p>
+      <p class="article-p">Share of those killings in Jenin, Tubas, and Tulkarm governorates</p>
+      <p class="article-p">roughly 60 percent (74 of 126)</p>
+      <p class="article-p">Food-sector people reached in the three governorates (by end April 2025)</p>
+      <p class="article-p">more than 93,570</p>
+      <p class="article-p">Farmers, food producers, and herders supported</p>
+      <p class="article-p">more than 3,000</p>
+      <p class="article-p">MIFTAH displaced-women survey sample size</p>
+      <p class="article-p">300 women</p>
+      <h4 class="article-h4">6.5 Straw Weaving: Practitioner Indicators</h4>
+      <p class="article-p">Indicator</p>
+      <p class="article-p">Figure</p>
+      <p class="article-p">Historically active weavers in Palestine (all types, pre-1948)</p>
+      <p class="article-p">more than 300</p>
+      <p class="article-p">Active looms in al-Majdal alone (mid-19th century)</p>
+      <p class="article-p">more than 500</p>
+      <p class="article-p">Wheat share of Palestinian field-crop area (2020/2021)</p>
+      <p class="article-p">46.5 percent (101,000 dunums)</p>
+      <p class="article-p">Drop in total field-crop area, 2009/2010 vs 2020/2021</p>
+      <p class="article-p">24,700 dunums</p>
+      <p class="article-p">Typical hours of work per mid-size tabaq (40 cm)</p>
+      <p class="article-p">20 to 40 hours</p>
+      <p class="article-p">Typical retail price range, Kufr Manda or equivalent tabaq</p>
+      <p class="article-p">USD 30 to 150</p>
+      <p class="article-p">Known practising wheat-stem weavers inside Israel (2023 Haaretz)</p>
+      <p class="article-p">one named (Mohammed Zeitoun)</p>
+      <p class="article-p">Average age of practising Galilee weavers</p>
+      <p class="article-p">predominantly over 60</p>
+      <h2 class="article-h2">7. Economic and Social Significance</h2>
+      <p class="article-p">The evidence compiled here — quantitative and qualitative — converges on three points.</p>
+      <p class="article-p">First, the northern Palestinian craft economy is not a supplementary hobby sector. It is a first-line livelihood for women whose formal labour market participation is structurally suppressed. At 17.2 percent female labour force participation, well under a fifth of working-age women are in the formal workforce; among women in rural villages and refugee camps, that fraction is smaller still. The craft economy is therefore the chief pathway through which many northern Palestinian women earn independent income at all.</p>
+      <p class="article-p">Second, the social return on craft income is disproportionately large. The original report's observation that cooperative participants become the first in their communities to obtain driver's licenses, to enroll in accounting courses, and to fund children's university education is directly corroborated in the newer sources: Salma Bozeye's daughters studying nursing, English literature, and plastic arts on craft income; MIFTAH's finding that pre-existing craft skills materially improved displaced women's ability to restabilize after forced displacement in 2025.</p>
+      <p class="article-p">Third, the craft economy functions as social infrastructure. The Sindyanna of Galilee Kufr Manda workshop is the clearest case: a shared physical space where Palestinian and Jewish women have woven together for more than a decade and a half, sustained through political crises including the 2010 flotilla incident, and one of the few settings in which inter-communal craft transmission occurs at all. In the camps, the cooperative workshop is where displaced women in 2025 and 2026 regain some of the collective rhythm lost to displacement.</p>
+      <h2 class="article-h2">8. Challenges and Preservation</h2>
+      <p class="article-p">The challenges identified in the original report — aging artisans, loss of tacit knowledge, market competition, political and economic constraints, scarcity of natural materials — are all deepened by the events of 2025–2026. Two observations should be added.</p>
+      <p class="article-p">Destruction of workshop space is now a first-order threat. Cooperative infrastructure — the physical rooms, looms, dye vats, storage racks, and teaching spaces — has been destroyed or abandoned in the Jenin, Tulkarm, and Nur Shams camps. Rebuilding these spaces is not reducible to material replacement; the accumulated acoustic and social memory of a workshop — who sat where, which elder taught which stitch — cannot be reconstituted by purchase.</p>
+      <p class="article-p">Supply-chain compression from both ends is a second-order threat. Restrictions on movement and on imports and exports (documented in the ILO, UN Women, and OCHA sources) mean that both raw materials and finished products are bottlenecked at checkpoints. For a craft like straw weaving, where the raw material is nominally free, this matters less at the harvesting end than at the marketing end: the premium fair-trade channels that make the craft economically viable rely on export logistics that are now unreliable.</p>
+      <p class="article-p">The preservation network active in this space — Darzah in Jenin, Sunbula in Jerusalem, Handmade Palestine, Hala Palestine, the Palestinian Soap Cooperative, Nöl Collective, Sindyanna of Galilee, Bait Al Turath, MECA, and the diaspora-facing retailers such as Shop Palestine — represents the strongest institutional response currently available. Its shared features are useful to note: (a) direct, fair-wage relationships with named artisans rather than anonymous supply chains; (b) export-to-diaspora-and-solidarity-markets orientation; (c) apprenticeship and training built into the business model; (d) documentation and storytelling as part of the product. Scaling this model — particularly its apprenticeship pipeline — is the central preservation task.</p>
+      <h2 class="article-h2">9. Conclusion</h2>
+      <p class="article-p">Female artisans in northern Palestine occupy a double position: they are the custodians of some of the oldest material-cultural practices in the Levant, and they are among the most economically and politically vulnerable participants in that region's economy. Straw weaving, within this landscape, is the clearest emblem of both facts. It is as old as settled agriculture in the region. It is entirely women's work. It is transmitted only through hand-to-hand apprenticeship. Its practitioners are ageing, and its active workshop spaces are being destroyed faster than new ones are being built.</p>
+      <p class="article-p">The expanded statistical picture in Section 6 makes the economic stakes concrete. The ethnographic literature reviewed in Section 3 provides the historical depth. The sub-regional disaggregation in Section 2 clarifies that the Galilee and the northern West Bank are one cultural zone artificially divided. The case studies from Kufr Manda, Najaf, Kaukab Abu al-Hija, Jenin, and Salfit in Section 4 put names and stories to the statistics.</p>
+      <p class="article-p">Three priorities follow for anyone, whether researcher, donor, policymaker, or consumer, who wishes to act on this evidence. First, support structured apprenticeship programmes that pair elder master weavers with younger women for multi-year periods, not single workshops. Second, fund the physical reconstruction of workshop space in the Jenin, Tulkarm, and Nur Shams camps as part of the broader recovery from the 2025 operations. Third, commission the granular, village-level survey work that the original report identified as a key gap: we still do not have a reliable headcount of active straw weavers in the Galilee, in Jenin, or in Tubas. A craft cannot be saved by a sector that has not been counted.</p>
+      <h2 class="article-h2">10. Expanded References</h2>
+      <h3 class="article-h3">Scholarly Books and Ethnographic Works</h3>
+      <ul class="article-ul">
+        <li>Canaan, Tawfiq. Mohammedan Saints and Sanctuaries in Palestine. Jerusalem: The Syrian Orphanage Press, 1927.</li>
+        <li>Canaan, Tawfiq. The Palestine Arab House: Its Architecture and Folklore. Jerusalem: The Syrian Orphanage Press, 1933.</li>
+        <li>Canaan, Tawfiq. Collected articles in the Journal of the Palestine Oriental Society (JPOS), 1920–1938.</li>
+        <li>Dalman, Gustaf. Arbeit und Sitte in Palästina (Work and Customs in Palestine), 7 volumes, 1928–1942.</li>
+        <li>Granqvist, Hilma. Marriage Conditions in a Palestinian Village. Helsinki, 1931–1935.</li>
+        <li>Weir, Shelagh. Palestinian Costume. London: British Museum Publications, 1989.</li>
+        <li>Weir, Shelagh. Embroidery from Palestine. London: British Museum Press, 1970.</li>
+        <li>Tamari, Salim. Mountain against the Sea: Essays on Palestinian Society and Culture. Berkeley: University of California Press, 2009.</li>
+        <li>Tamari, Salim. “Lepers, Lunatics and Saints: The Nativist Ethnography of Tawfiq Canaan and His Jerusalem Circle,” Jerusalem Quarterly File, 2004.</li>
+        <li>Tamari, Salim. “Tawfiq Canaan and Gustav Dalman: German Orientalism and the Native Informant,” Jerusalem Quarterly 102.</li>
+        <li>Mubayyid, Salim Arafat al-. Al-Jughraphia al-Fulkloriyya lil-Amthal al-Shaʻbiyya al-Filastiniyya (Folkloric Geography of Palestine). Cairo: Egyptian Book Commission, 1986.</li>
+        <li>Sirhan, Nimr. Mawsuʻat al-Fulklur al-Filastini (Encyclopedia of Palestinian Folklore), Volume 1. Amman: Al-Bayadir Press, 1989.</li>
+        <li>Irving, Sarah. Intellectual Networks, Language and Knowledge under Colonialism: The Work of Stephan Stephan, Elias Haddad and Tawfiq Canaan in Palestine, 1909–1948. Doctoral dissertation.</li>
+        <li>Nashef, Khaled. “Tawfik Canaan: His Life and Work,” Jerusalem Quarterly 16, 2002.</li>
+        <li>Raheb, Mitri (ed.). Tawfiq Canaan: An Autobiography. Diyar Publisher, 2020.</li>
+      </ul>
+      <h3 class="article-h3">International and National Statistical and Policy Sources</h3>
+      <ul class="article-ul">
+        <li>Palestinian Central Bureau of Statistics (PCBS). Agricultural Census 2020/2021. Ramallah: PCBS, 2022.</li>
+        <li>Palestinian Central Bureau of Statistics (PCBS). Informal Sector in Palestine 2022. Ramallah: PCBS, 2022.</li>
+        <li>Palestinian Central Bureau of Statistics (PCBS). Press releases on the conditions of Palestinian refugees, 2025.</li>
+        <li>International Labour Organization (ILO). Fact Sheet: Palestinian Women in the Labour Market.</li>
+        <li>UN Women Palestine. Facts and Figures: Economic Empowerment.</li>
+        <li>United Nations Relief and Works Agency (UNRWA). Operational updates on northern West Bank camps, 2025.</li>
+        <li>OCHA (Office for the Coordination of Humanitarian Affairs – Occupied Palestinian Territory). Humanitarian Situation Updates, West Bank, 2025 (including updates 262 and 268).</li>
+        <li>OCHA. Northern West Bank Humanitarian Response Update, 21 January – 30 April 2025.</li>
+        <li>SDG Fund. Occupied Palestinian Territory: One-Stop-Shop for Sustainable Women-Owned Businesses.</li>
+        <li>Al-Shabaka. Unlocking the Labor Market for Palestinian Women.</li>
+        <li>World Bank and PCBS. Seeing is Believing: Poverty in the Palestinian Territories, 2014.</li>
+        <li>MIFTAH. The Gendered Impact of Forced Displacement on Palestinian Families from Northern West Bank Refugee Camps, 2025.</li>
+      </ul>
+      <h3 class="article-h3">Fair-Trade, Cooperative, and Artisan-Facing Documentation</h3>
+      <ul class="article-ul">
+        <li>Sunbula Fair Trade Organization. “Basketry” and “Types of Palestinian Crafts.” Jerusalem.</li>
+        <li>Handmade Palestine. Product catalogue and cultural-heritage blog posts, including coverage of Om Yusef's saniye weaving.</li>
+        <li>Palestinian Soap Cooperative. “Heritage of Soap Factories in Nablus.”</li>
+        <li>Hala Palestine. Cooperative profile and Nablus soap-house partnerships.</li>
+        <li>Darzah. Artisan profiles and reporting from the Jenin Refugee Camp workshop.</li>
+        <li>Nöl Collective. “Nöl: Weaving Threads of Palestinian History” and related company documentation.</li>
+        <li>Sindyanna of Galilee. “Weaving for a Brighter Future in Kufr Manda,” “Weaving Baskets of Peace,” and “The Story of Fatmah Haj (Um Ihab).”</li>
+        <li>Shop Palestine – MECA. Artisan profile: Salma Bozeye (Bait Al Turath, Salfit).</li>
+        <li>Palbox. “Palestinian Artisans: Master Craftspeople Preserving Heritage.”</li>
+        <li>Heinrich-Böll-Stiftung Palestine. Cultural Heritage and Traditional Crafts.</li>
+      </ul>
+      <h3 class="article-h3">Press and Cultural Coverage</h3>
+      <ul class="article-ul">
+        <li>Haaretz. “The Man Reviving Palestinian Women's Weaving,” profile of Mohammed Zeitoun, 12 July 2023.</li>
+        <li>Palestine Information Centre. “Palestinian Woman Weaves Identity,” profile of Fatima Om Mansur, 24 February 2023.</li>
+        <li>Positively Palestine Magazine. “Weaving and Embroidery in Palestine.”</li>
+        <li>This Week in Palestine. “Industry in Palestine” and associated special issues.</li>
+        <li>Ein Dor Archaeological Museum. Exhibit documentation on Galilee straw weaving (tabaqs), referenced in encyclopaedic sources.</li>
+        <li>The Zay Initiative. Review of Shelagh Weir's Palestinian Costume.</li>
+      </ul>
+      <h3 class="article-h3">Digital and Reference Sources</h3>
+      <ul class="article-ul">
+        <li>Palquest – Interactive Encyclopedia of the Palestine Question. Biographical entry on Tawfiq Canaan.</li>
+        <li>Jerusalem Story. Biographical profile of Tawfiq Canaan.</li>
+        <li>Institute for Palestine Studies. Journal articles and archival materials, including Jerusalem Quarterly back-issues.</li>
+        <li>Palestinian handicrafts, summary encyclopaedic entry (and sources cited therein).</li>
+      </ul>
+  </article>
+
+  <nav class="article-foot">
+    <a class="foot-link prev" href="female-artisans.html">
+      <span class="foot-dir">← Previous</span>
+      <span class="foot-title">Female Artisans</span>
+    </a>
+    <a class="foot-link next" href="montage-reality.html">
+      <span class="foot-dir">Next →</span>
+      <span class="foot-title">When the Imagination of Montage Becomes Reality</span>
+    </a>
+  </nav>
+  <script>
+  (function(){
+    var nav = document.querySelector('.article-nav');
+    var lastY = window.scrollY;
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y > 140 && y > lastY + 6) nav.classList.add('nav-hidden');
+      else if (y < lastY - 6 || y <= 140) nav.classList.remove('nav-hidden');
+      lastY = y;
+    }, { passive: true });
+  })();
+  </script>
+  </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Natalie Almasri — Artist &amp; Creator</title>
+  <meta name="description" content="Natalie Almasri — Palestinian artist working in sculpture, mixed media, drawing, and oil painting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+
+  <style>
+    /* ── HERO ────────────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: calc(var(--nav-h) + 48px) clamp(24px, 6vw, 96px) 80px;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--lavender3); margin-bottom: 24px;
+      opacity: 0; animation: fadeUp 1s 0.3s var(--ease-out) forwards;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 7.5rem);
+      font-weight: 300; line-height: 0.96;
+      color: var(--ink2); margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 1s 0.5s var(--ease-out) forwards;
+    }
+    .hero-name em { font-style: italic; color: var(--lavender3); }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-style: italic; font-weight: 300; line-height: 1.55;
+      color: var(--ink3); max-width: 420px; margin-bottom: 48px;
+      opacity: 0; animation: fadeUp 1s 0.7s var(--ease-out) forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s 0.9s var(--ease-out) forwards;
+    }
+    .hero-right {
+      position: relative; overflow: hidden;
+      opacity: 0; animation: fadeIn 1.4s 0.4s var(--ease-out) forwards;
+    }
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-img-label {
+      position: absolute; bottom: 32px; left: 32px;
+      font-family: var(--font-body); font-size: 0.7rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      background: rgba(139,111,196,0.25);
+      padding: 6px 14px; backdrop-filter: blur(8px);
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: 40px; left: clamp(24px, 6vw, 96px);
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-body); font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink3);
+      opacity: 0; animation: fadeUp 1s 1.2s var(--ease-out) forwards;
+    }
+    .scroll-line {
+      width: 40px; height: 1px; background: var(--lavender3);
+      animation: lineGrow 1.5s 1.5s var(--ease-out) forwards;
+      transform-origin: left; transform: scaleX(0);
+    }
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: rgba(200, 180, 232, 0.35);
+      animation: floatParticle linear infinite;
+      pointer-events: none;
+    }
+
+    /* ── ABOUT ───────────────────────────────────────────── */
+    #about {
+      padding: 120px clamp(24px, 6vw, 96px);
+      background: var(--cream2);
+      display: flex; justify-content: center;
+    }
+    .about-text { max-width: 760px; text-align: center; }
+    .about-text .about-lead { border-left: none; padding-left: 0; max-width: 620px; margin-left: auto; margin-right: auto; }
+    .about-text .about-body { max-width: 620px; margin-left: auto; margin-right: auto; }
+    .about-text .section-label { justify-content: center; }
+    .about-text .section-title { margin-bottom: 28px; }
+    .about-lead {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 300;
+      font-style: italic; line-height: 1.6; color: var(--ink3);
+      margin-bottom: 24px; border-left: 2px solid var(--lavender3);
+      padding-left: 20px;
+    }
+    .about-body {
+      font-size: 0.95rem; line-height: 1.85; color: var(--ink3);
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 320px; }
+      .hero-scroll-hint { display: none; }
+      #about { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="sig">
+      <img src="uploads/signature-cropped.png" alt="Natalie Almasri signature" />
+    </span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" aria-current="page">Home</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Palestinian Artist</p>
+    <h1 class="hero-name">
+      Natalie<br><em>Almasri</em>
+    </h1>
+    <p class="hero-tagline">
+      "I make art the way light finds a way through stone — quietly, persistently, leaving something behind."
+    </p>
+    <div class="hero-ctas">
+      <a href="gallery.html" class="btn-primary">View Gallery ↗</a>
+      <a href="#about" class="btn-ghost">My Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <img src="uploads/IMG_0154.jpeg" alt="Sleepless" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(250,247,242,0.15) 0%, transparent 50%);"></div>
+    </div>
+    <div class="hero-img-label">Sleepless · Etching · 2022</div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-text">
+    <p class="section-label reveal">The Artist</p>
+    <h2 class="section-title reveal">A Story<br>Told in <em>Layers</em></h2>
+    <p class="about-lead reveal reveal-delay-1">
+      My work is rooted in the land, the memory, and the weight of belonging to a place that lives in the imagination as much as in reality.
+    </p>
+    <p class="about-body reveal reveal-delay-2">
+      I'm Natalie Almasri — a Palestinian artist working across sculpture, mixed media, oil painting, and drawing. I grew up between cultures, and my art has always been the place where those tensions dissolve into something honest.
+    </p>
+    <p class="about-body reveal reveal-delay-3">
+      My sculptures speak of impermanence and resilience — crafted from clay, found objects, and materials that carry their own history. My paintings explore colour as emotion: the amber of olive groves, the grey-blue of Mediterranean mornings, the deep violet of quiet grief that becomes quiet strength.
+    </p>
+    <p class="about-body reveal reveal-delay-4">
+      I believe art doesn't need to explain itself. It only needs to make you feel less alone.
+    </p>
+    <a href="contact.html" class="btn-primary reveal reveal-delay-4" style="margin-top:32px; display:inline-flex;">Work Together ↗</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Natalie Almasri</div>
+  <p class="footer-copy">© 2026 Natalie Almasri. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="#" class="social-link" title="Instagram">Ig</a>
+    <a href="#" class="social-link" title="LinkedIn">Li</a>
+    <a href="mailto:nataliekhalmasri@gmail.com" class="social-link" title="Email">✉</a>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+  function spawnParticles() {
+    const hero = document.getElementById('hero');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 4 + Math.random() * 14;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%; top:${Math.random()*100}%;
+        --px:${(Math.random()-0.5)*200}px;
+        --py:${-80 - Math.random()*180}px;
+        animation-duration:${6 + Math.random()*10}s;
+        animation-delay:${Math.random()*6}s;
+        opacity:0;
+      `;
+      hero.appendChild(p);
+    }
+  }
+  spawnParticles();
+</script>
+</body>
+</html>

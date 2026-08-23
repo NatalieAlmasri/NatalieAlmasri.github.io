@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Third Cinema Theory — As an Act of Resistance · Natalie Almasri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --cream:#FAF7F2; --cream2:#F3EDE3; --parchment:#EDE3D5;
+      --lavender:#C8B4E8; --lavender2:#B09AD8; --lavender3:#8B6FC4;
+      --ink:#1C1720; --ink2:#3A2F45; --ink3:#6B5F7A;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --ease-out:cubic-bezier(0.16,1,0.3,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--ink);font-family:var(--font-body);font-weight:300;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--cream2);}
+    ::-webkit-scrollbar-thumb{background:var(--lavender2);border-radius:2px;}
+    .article-nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,5vw,64px);background:rgba(250,247,242,0.88);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(200,180,232,0.25);transition:transform 0.45s var(--ease-out);}
+    .article-nav.nav-hidden{transform:translateY(-100%);}
+    .back-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color 0.3s,gap 0.3s var(--ease-out);}
+    .back-link:hover{color:var(--lavender3);gap:14px;}
+    .article-nav .brand{grid-column:2;justify-self:center;display:flex;align-items:center;height:42px;text-decoration:none;}
+    .article-nav .brand img{height:100%;width:auto;display:block;}
+    .article-hero{padding:calc(64px + 60px) clamp(20px,5vw,64px) 0;max-width:860px;margin:0 auto;text-align:center;}
+    .article-tag{font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--lavender3);margin-bottom:24px;opacity:0;animation:fadeUp 0.9s 0.1s var(--ease-out) forwards;}
+    .article-title{font-family:var(--font-display);font-weight:300;font-size:clamp(2.6rem,6vw,5rem);line-height:1.02;color:var(--ink2);margin-bottom:12px;opacity:0;animation:fadeUp 0.9s 0.25s var(--ease-out) forwards;}
+    .article-subtitle{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.3rem,3vw,2rem);color:var(--lavender3);margin-bottom:28px;opacity:0;animation:fadeUp 0.9s 0.35s var(--ease-out) forwards;}
+    .article-meta{font-family:var(--font-body);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:48px;opacity:0;animation:fadeUp 0.9s 0.45s var(--ease-out) forwards;}
+    .article-intro{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.2rem,2.4vw,1.6rem);line-height:1.55;color:var(--ink3);max-width:640px;margin:0 auto 56px;opacity:0;animation:fadeUp 0.9s 0.55s var(--ease-out) forwards;}
+    .hero-image{width:100%;max-width:1000px;margin:0 auto 72px;aspect-ratio:16/9;overflow:hidden;background:var(--cream2);opacity:0;animation:fadeIn 1.2s 0.5s var(--ease-out) forwards;}
+    
+    .article-body{max-width:900px;margin:0 auto;padding:0 clamp(24px,6vw,40px) 80px;}
+    .article-foot{border-top:1px solid var(--parchment);max-width:860px;margin:0 auto;padding:40px clamp(20px,5vw,24px) 80px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+    .foot-link{text-decoration:none;max-width:46%;}
+    .foot-link.next{text-align:right;margin-left:auto;}
+    .foot-dir{font-family:var(--font-body);font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:block;}
+    .foot-title{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--ink2);line-height:1.2;transition:color 0.3s;}
+    .foot-link:hover .foot-title{color:var(--lavender3);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @media(max-width:600px){.article-nav .brand{display:none;}.foot-link{max-width:100%;}}
+    /* long-form reading */
+    .article-p{font-family:var(--font-body);font-size:1rem;line-height:1.8;color:var(--ink2);margin-bottom:22px;text-wrap:pretty;}
+    .article-lead-p::first-letter{font-family:var(--font-display);font-size:4rem;font-weight:500;float:left;line-height:0.78;padding:8px 16px 0 0;color:var(--lavender3);}
+    .article-h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.4vw,2.4rem);font-weight:500;color:var(--ink2);line-height:1.12;margin:64px 0 18px;}
+    .article-h3{font-family:var(--font-display);font-style:italic;font-size:clamp(1.3rem,2.4vw,1.6rem);font-weight:500;color:var(--lavender3);margin:42px 0 12px;}
+    .article-h4{font-family:var(--font-body);font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin:32px 0 10px;}
+    .article-ul{margin:8px 0 26px;padding-left:24px;}
+    .article-ul li{font-family:var(--font-body);font-size:1rem;line-height:1.7;color:var(--ink2);margin-bottom:10px;padding-left:6px;}
+    .article-ul li::marker{color:var(--lavender3);}
+    .article-quote{margin:40px 0;padding:6px 0 6px 30px;border-left:3px solid var(--lavender3);font-family:var(--font-display);font-style:italic;font-size:1.45rem;line-height:1.5;color:var(--ink2);}
+    .article-figure-img{margin:48px 0;}
+    .article-figure-img img{width:100%;height:auto;display:block;border-radius:4px;}
+    .article-figure{margin:52px 0 8px;}
+    
+    .article-figcaption{font-family:var(--font-body);font-size:0.74rem;letter-spacing:0.04em;color:var(--ink3);text-align:center;margin-top:12px;font-style:italic;}
+  .img-placeholder{width:100%;height:100%;background:linear-gradient(135deg, #C8B4E8 0%, #E8C4C4 40%, #F3EDE3 70%, #A8C4A2 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}.img-placeholder::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(255,255,255,0.08) 14px,rgba(255,255,255,0.08) 15px);}.img-placeholder .cap{position:relative;z-index:1;font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(80,60,110,0.55);}
+  </style>
+</head>
+<body>
+  <nav class="article-nav">
+    <a href="writing.html" class="back-link">← Back to Writing</a>
+    <a href="index.html" class="brand"><img src="uploads/signature-cropped.png" alt="Natalie Almasri" /></a>
+  </nav>
+
+  <header class="article-hero" data-screen-label="Article: Third Cinema Theory">
+    <p class="article-tag">Film Theory</p>
+    <h1 class="article-title">Third Cinema Theory</h1>
+    <p class="article-subtitle">As an Act of Resistance</p>
+    <p class="article-meta">Essay · 2024</p>
+    <p class="article-intro">On cinema born from the struggle against colonialism — and the screen as a space where the colonised refuse to disappear.</p>
+  </header>
+
+  <div class="hero-image">
+    <img src="uploads/third-cinema-cover.jpg" alt="Third Cinema cover" style="width:100%;height:100%;object-fit:cover;display:block;" />
+  </div>
+
+  <article class="article-body">
+      <p class="article-p article-lead-p">The word "resistance" has always had a great impact on the souls that inspired writers, poets and revolutionaries. When we resist -willing or forced- this considered a heroic act, so what about when your legitimate right and your innate reaction to resistance are a crime?</p>
+      <p class="article-p">Guyanese historian and politician Walter Rodney defines colonialism in his book (How Europe Limit Africa's Development): as “a state policy that seeks to extend or maintain its hegemony over other people or regions, for economic purposes in general. Whatever the various pretexts and arguments that justify colonialism the resistance was popularity is inevitable, Which we may find its most beautiful cinematic manifestations in the movie “La battaglia di Algeri” by Italian director Gillo Pontecorvo, who filmed the struggle of the People's Liberation Front in Algeria against the French occupation. Perhaps one of the most important factors that made this film exceptional is that it raised the moral question, as Benticorvo showed us the meaning of the owners of the land and its occupiers, as described by film critic Abdullah Habib: “The revolution is not the simplistic romance in which films with naive romantic and emotional politicization portray it; The revolution, in fact, kills the innocent on both sides, as “the revolution is not a pair of soft white gloves,” as famously described by Mao Zedong.</p>
+      <p class="article-p">The 1960s in Argentina was a turbulent period due to social, cultural and political changes. With Arturo Frondizi assuming the presidency as the first elected president after the coup against the government of Juan Perón in 1955, the greatest reliance on foreign capital assets to drive national industry, which developed both sectors Services and trade was a new type of colonialism, “Neo-colonialism.” Kwame Nkrumah, the first president of independent Ghana, meant that the remnants of the former colonialism and the new major emerging powers on the world scene such as the United States continued to play a decisive role in the fate of these countries through stabilizing prices in world markets, multinational companies, and cartels, in addition to a variety of educational and cultural institutions. Late in this era, Fernando Solanas and Octavio Getino, members of the Grupo Cine Liberaciòn in Argentina, wrote a Manifesto (Hacia un tercer cine), which was like a petition against neocolonialism, capitalism, the Hollywood model of film profits, and the tool for pure entertainment. However, there is no doubt that this statement was much more than that due to its spread and impact not only on the colonial countries and their cinemas, but even on the cinema of the enemy as he calls it “the Manifesto”.</p>
+      <p class="article-p">Ten years after the Manifesto, in 1978, the Palestinian-American Edward Said wrote a book called “Orientalism”, which is considered the first of Said's basic contributions in the field of Orientalist studies, and the post-colonial period. With this book, Said presents a radical critique of Western studies of the Orient, specifically by researchers in Britain, France, Italy and Germany. Said's goal in this book was to reflect the systematic misrepresentations of the Orient, which continue to govern Western perceptions of the world's developed nations. According to Said, Westerners do not have the ability to understand the images of the true Orientals, and instead adopt the unrealistic representations created by other thinkers, so the West tends to see the Orient through the eyes of the Orientalists, who, according to Said, conveyed an ideological vision of the Orient constructed by the power of colonialism during the colonial period.</p>
+      <p class="article-p">The manifesto begins towards a third cinema with the phrase “we must discuss, we must create” by the Martinique writer Frantz Fanon (1925-1961),  who was a physician, philosopher, and psychotherapist. After completing his studies in Paris and obtaining citizenship, Fanon realized that he was not French enough in the eyes of the French because of his black skin, and he is not really Martinique in the eyes of the Martinis, because he acts and speaks with the enemy's thought and language. In his book “Black Skin</p>
+      <p class="article-p">and White Masks”, Fanon writes: “To speak a language is to take on a world and a culture. The Negro of the Antilles wants to be a white man, and he will be whiter the better he can use the cultural instrument that is language. Historically, we must not forget that the Negro wants to speak French because it is the key that can open doors that were still forbidden from fifty years ago. “. Manifesto's influence extends towards a third cinema in different parts of the world to show us a distinct group of films that resulted from the struggle against neo-colonialism and its aftermath “No form of international struggle can be successfully implemented unless there is a common exchange of experiences between people, unless the people succeed in overcoming the global, continental and nationalistic plans of (Balkanization) that imperialism strives to maintain.”</p>
+      <p class="article-p">Relying on the concept of discourse, and more specifically on ideas concerned with Michel Foucault's theory of power/knowledge (1980), Said applies his thesis to Western Orientalist discourse, and argues that without taking into account the development of Orientalism as a discourse, it is not possible to understand how Western cultures succeeded in dominating the regions of the East. Politically, socially, culturally, scientifically and militarily after the Enlightenment era. As Foucault posits that knowledge is a form of power, Said also concludes power exercised by the West in ideologically distributing knowledge; to serve orientalist ambitions.</p>
+      <p class="article-p">With regard to Said's approach to representing the idea of ​​identity in Orientalism, he argues in this book that his goal is to refute the misrepresentations of the Orient, and in particular to reveal some problematic images that have become associated with the image of the Arab and Islamic worlds. According to Said himself, in “Orientalism” and in two subsequent books, “The Palestinian Question” and “Covering Islam,” he tried to deal with the modern relationship between the world of Islam and the Arabs and the East in one hand, and on the other hand the West: France and Britain, especially the United States. Said tried to dismantle the wrong Western ideas concerned with Arabs and Islam.</p>
+      <p class="article-p">Orientalism represents a Western attempt to understand the Orient, and at other levels, it molds and stereotypes it according to the European cultural context. Its isolation and ambiguity, and serious assistance to it in redefining it from Eurocentrism. The Easterner is unable to define himself and touch the features of his civilization and civilization. Therefore, Europeans practice this definition according to a transcendent perspective that takes Europe as a standard and a model. The danger of Orientalism lies in the fact that it represents different actions that do not receive similar types. From the response, Orientalism at the political level represents a colonial situation based on the theory of Europe's political superiority and the necessity of preserving its interests, which means that Orientalism must practice subjugating the eastern political consciousness, and perpetuate the concept of dwindling and fading out in front of Western tyranny, which in this case receives a violent response undoubtedly. On the cultural level, Orientalism is a purely civilized case that reproduces definitions of the eastern other, as the backward, barbaric and weak opposite.</p>
+      <p class="article-p">It seems to be completely consistent with the theory of the burden of the white man, who has to bear on his shoulders the duty to civilize and prepare others. Cultural Orientalism had to It dedicates the protection of the arrogant Western self as the historical guarantor of civilization, or as Fukuyama believes that it is the final form of history. and cultural for many centuries, and represented in long periods a direct threat to European consciousness, and a kind of military and cultural derogation of that self, and based on all of the above, the response to this type of Orientalist act is usually tinged with caution, but it does not receive violent reactions, due to the confusion of meanings in it.</p>
+      <p class="article-p">Back to cinema, the four hours and twenty minutes movie “La Hora de los Hornos” by Fernando Solanas and Octavio Getino, is considered the closest film translation to the Third Cinema Manifesto, not only from a technical and aesthetic point of view, as many of the Manifesto texts are mentioned orally and in writing in the scenic comments, the nature of the film creates a mood that combines newsreels with a bit of Italian neo-realism. The use of a 16 and 8-mm camera in photography was one of the most important aspects of the aesthetic austerity revolting against the norms of the first (luxury Hollywood) cinema, and the artistic tendency of the second (individual European) cinema. Journalist Hovik Habashian attributes the film's strength because director Fernando Solanas “has analyzed and argued revolutionary thought in its most accurate details and related questions, questions that do not neglect the historical, economic and geographical aspects of the impending revolution that should have occurred without delay from his point of view.</p>
+      <p class="article-p">” The camera was in the hands of the director and factory worker, sometimes with the complicit bourgeoisie, or even in the hands of the enemy at other times. All this, along with the introduction of dialogue, popular, revolutionary and classical music, even street noises, the sounds of guns and sirens, contributed to destroying the myth of the indispensable technicians. The film industry at that point became more like a “guerrilla war,” as the manifesto describes it.</p>
+      <p class="article-p">“La Hora de los Hornos”  and the Palestinian documentary “Five Broken Cameras” as an example of the Third Cinema:</p>
+      <p class="article-p">“Revolution Cinema” played an important role in the Arab world, especially in post-Nakba in Palestine. “The Palestinian Cinema Group”, a group of filmmakers and researchers backed by the Palestine Liberation Organization, participated in documenting daily life and events in Palestine. The camera has become a tool in the Arab-Israeli conflict, and an important means to fight the Israeli occupation. The aim of these films was to show the realities of the struggle and to control its true image, which Israel was trying to erase in a systematic way. The footage was seen as part of the struggle, and directors such as Mustafa Abu Ali and Hani Jawhariyya were not making films on the basis that they were artists, but rather that their work was no different from that of the one with the gun. The photograph determined and decided the fate of revolutionary activities and was part of the ongoing struggle, until the camera was described as a rifle.</p>
+      <p class="article-p">“La Hora de los Hornos” also shows us how to make a film in hostile conditions, dependent on the support and cooperation of the revolutionaries, students and simple people, which made the process of showing the third cinema films in that period a meeting of the revolutionaries, after which a discussion of the presented events takes place. Just as the goal of editorial films in Cuba was to train the people to be liberated and refuse submission, the Oven Hour film contributed to liberating the audience's taste from “cultural penetration.” It is a counter-film in which the third world citizen is not a consumer of ideology but rather a critic and creator of it. It is not surprising that dictatorial governments describe This type of film is referred to as “disruptive films” due to its hyper-realism and accusing it of inciting violence, Frantz Fanon says: “Out of the possibility of torture, rape and massacres. Torture is a model of the relations between the colonizer and the colonized.”  This is exactly how “Five broken cameras” documentary represents the continues Israeli occupation of the Palestinian land from 74 years till now.</p>
+      <p class="article-p">On the other hand “5 Broken Cameras” is a documentary film directed by the Palestinian Imad Burnat and the Israeli Guy Davidi. It tells through the story of Imad, his family and his five broken cameras, the story of the popular resistance in the Palestinian village of Bil'in  against the apartheid wall and settlement. Imad Burnat, originally a Palestinian farmer, has filmed all scenes of the movie since 2005, when he bought his first camera to document the birth of his youngest son. In 2009 he was joined by director Guy Davide to work on the film.</p>
+      <p class="article-p">“In 2009, I decided to direct a film of about 700 hours of filming that I had, most of which was filmed by me, documenting what is going on in Bil'in and also containing many shots of my family. I called Guy Davidi, whom I got to know from his visits to the village, so that we can direct the film together.” Emad says about the beginning of his idea for making the film. He had initially decided to direct a film about Bassem Abu Rahma, his friend who was killed in front of the cameras' lenses, and part of the film's events revolve around him and Adeeb Abu Rahma, who was arrested and wounded more than once. Emad went to the Israeli director Guy Davidi, whom he met in 2005, as he was one of the peace activists who supported the peaceful struggle of the village. He also lived there for three months to make his own film about water.</p>
+      <p class="article-p">The film depicts the peaceful protests taking place in Bil'in against the wall, as well as night raids, arrests of children, conflict with settlers, and daily life under the occupation, partly away from the television lenses that often leave with the end of the peaceful marches that usually take place on Fridays. The film also includes many fragile moments of daily life and the fears of the father, Imad Burnat, who is the narrator in the film, who sees his son Gabriel growing up, the settlements growing with him, and the wall around him.</p>
+      <p class="article-p">The film succeeds in attracting the viewer, even the viewer who is familiar with many aspects of the conflict. He alternates between recounting what is happening in his home and with his children, observing the son Gabriel as he grows up and asking many questions. The film is not without a lot of satirical shots, which would seem surreal if they were not realistic and lived. It was as if the army came one night to Imad Bernat's house and asked him to stop filming. When Imad replies that this is his house and that he is a journalist and he has the right to film inside his house, the soldier tells him that this house is a closed military area, but this surreal scene is nothing but the daily reality.</p>
+      <p class="article-p">The film does not include many artistic shots that we see today in a good number of documentaries, because Emad started shooting as an amateur and out of necessity. The film remains a powerful and emotionally charged film that shows the occupation with its fangs sticking out from the bodies of Palestinians and their land.</p>
+      <p class="article-p">Conclusion:</p>
+      <p class="article-p">The essential characteristics of a third cinema do not necessarily reflect the country in which it is made or the nationality of the director, but rather the ideology espoused by the film. We may not be far from the truth if we claim that the Third Cinema is the cinema of the Third World, even if the Manifesto does not mention that... This world stands in the face of imperialism and class oppression with all its repercussions, so that this cinema is an important means of documenting social reality. Political and cultural trends in the 1980s and 1990s, as well as during the new millennium, demonstrated the need to re-evaluate terminology and develop old data. New issues such as sexual and cultural identity have evolved and received new and larger perceptions, and are now a form of social struggle. The third cinema today needs to re-evaluate itself as an official icon in the cinematic world without losing its position as an opponent of the mainstream cinema. Although the historical contexts have changed, they still exist, and the need for revolutionary cinema is still in demand. Nevertheless, third cinema is still a global phenomenon that addresses the problems of the creation of nations, the disillusionment after military and cultural colonialism and the emergence of new forms of religious, social and sexual oppression.</p>
+      <p class="article-p">Realizing the existence of limitations has always been the first step towards freedom. The film industry itself is based on skepticism. The third cinema, with its sharp perspective on reality, its struggle message, its techniques and its aesthetics, is nothing but a provocation to the spectator's skepticism to reconsider his reality, and the fact that colonialism has many faces, not limited to domination over land and wealth, and confiscation of language and culture, but also in the advantages it gives to quell the flames of struggle in each one of us.  The presenter of the third cinema meant “that the world be examined, deconstructed, and rediscovered. That people become witnesses to lasting astonishment, a form of rebirth. they regain their early simplicity and adventurous ability; to bring their dormant capacity for indignation back to life.</p>
+      <p class="article-p">References:</p>
+      <p class="article-p">: Habib, A. September 13, 2016. Cultures Electronic Magazine, article: When the Other Speaks or the movie “The Battle of Algiers” by Gillo Pontecorvo.</p>
+      <p class="article-p">: Atiq, M. 2015. Postcolonialism: The Conceptions, Pioneers, Issues. Souk Ahras University, Algeria, p. 231.</p>
+      <p class="article-p">: https://en.wikipedia.org/wiki/Third_Cinema</p>
+      <p class="article-p">: Hammadi, L. 2014, Edward Said ; The postcolonial Theory and The literature</p>
+      <p class="article-p">of Decolonization, European Scientific Journal /SPECIAL /edition vol2 , p.202.</p>
+      <p class="article-p">: Fanon, F. 1961. The Wretched of the Earth. France, p. 6.</p>
+      <p class="article-p">: Balkanisation: A term that emerged at the end of World War I to describe the ethnic and political fragmentation of the Balkans as a result of the dissolution of the Ottoman Empire.</p>
+      <p class="article-p">: Solanas, F &amp; Getino, O. 1969. Toward a Third Cinema. Argentina.</p>
+      <p class="article-p">: Said, E. 1978. Orientalism. New York, United State, p. 121.</p>
+      <p class="article-p">: Said, E. 1985. Orientalism Reconsidered: Cultural Critique (1). University of Minnesota Press, pp. 89-107.</p>
+      <p class="article-p">: Callaghan, C. 2003 “Selected Bibliography of Work about and of Edward Said's Texts”, CLCWeb: Comparative Literature and Culture, 1-14.</p>
+      <p class="article-p">: Massad, J. “Affiliating with Edward Said,” in Edward Said: A legacy of emancipation and representation, edited by A. Iskander and H.Rustom, Berkeley: University of California Press, pp.23-49.</p>
+      <p class="article-p">: Habashian, H. 2020. The Independent Arabic website, article: Argentine Fernando Solanas established a third cinema far from Europe and Hollywood.</p>
+      <p class="article-p">: Fanon, F. 1961. The Wretched of the Earth. France.</p>
+      <p class="article-p">: Bil'in is a Palestinian village located in the Ramallah and al-Bireh Governorate, 12 kilometres (7.5 mi) west of the city of Ramallah in the central West Bank.,It has a population of 1,800,and it is internationally known for protests against the Israeli occupation and the community leader, Abdullah Abu Rahmah, who heads the weekly protests, is under indictment for what the prosecution has called the 'ideological crime' of taking illegal actions on the West Bank.</p>
+      <p class="article-p">: During an dissection with Emad Burnet and Guy Davidi following the screening of the documentary in Manhattan, New York.</p>
+      <p class="article-p">: Solanas, F &amp; Getino, O. 1969. Toward a Third Cinema. Argentina.</p>
+  </article>
+
+  <nav class="article-foot">
+    <a class="foot-link prev" href="erasing-history.html">
+      <span class="foot-dir">← Previous</span>
+      <span class="foot-title">Erasing History</span>
+    </a>
+    <a class="foot-link next" href="mushroom-textile.html">
+      <span class="foot-dir">Next →</span>
+      <span class="foot-title">Mushroom</span>
+    </a>
+  </nav>
+  <script>
+  (function(){
+    var nav = document.querySelector('.article-nav');
+    var lastY = window.scrollY;
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y > 140 && y > lastY + 6) nav.classList.add('nav-hidden');
+      else if (y < lastY - 6 || y <= 140) nav.classList.remove('nav-hidden');
+      lastY = y;
+    }, { passive: true });
+  })();
+  </script>
+  </body>
+</html>
