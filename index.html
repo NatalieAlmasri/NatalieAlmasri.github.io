@@ -11,15 +11,6 @@
   <link rel="stylesheet" href="assets/site.css" />
 
   <style>
-    /* ── FULL-PAGE SCROLL SNAP ───────────────────────────── */
-    html {
-      scroll-snap-type: y mandatory;
-    }
-    #hero, #about {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-    }
-
     /* ── HERO ────────────────────────────────────────────── */
     #hero {
       min-height: 100svh;
@@ -96,10 +87,9 @@
 
     /* ── ABOUT ───────────────────────────────────────────── */
     #about {
-      min-height: 100svh;
-      padding: calc(var(--nav-h) + 48px) clamp(24px, 6vw, 96px) 64px;
+      padding: 120px clamp(24px, 6vw, 96px);
       background: var(--cream2);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; justify-content: center;
     }
     .about-text { max-width: 760px; text-align: center; }
     .about-text .about-lead { border-left: none; padding-left: 0; max-width: 620px; margin-left: auto; margin-right: auto; }
@@ -117,11 +107,240 @@
       margin-bottom: 16px;
     }
 
+    /* ── GALLERY ─────────────────────────────────────────── */
+    #gallery {
+      padding: 100px clamp(24px, 6vw, 96px);
+      background: var(--cream);
+    }
+    .gallery-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-top: 32px;
+    }
+    .filter-btn {
+      font-family: var(--font-body); font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 7px 18px; border: 1.5px solid var(--parchment);
+      background: transparent; color: var(--ink3);
+      cursor: none; transition: all 0.3s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--lavender3); border-color: var(--lavender3); color: #fff;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .art-card {
+      aspect-ratio: 1 / 1;
+      position: relative; overflow: hidden;
+      background: var(--cream2);
+      cursor: none;
+      transition: transform 0.5s var(--ease-out), box-shadow 0.5s;
+    }
+    .art-card:hover { transform: scale(1.02); box-shadow: 0 20px 60px rgba(139,111,196,0.22); z-index: 2; }
+    .art-thumb {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      font-family: var(--font-body); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(100,80,130,0.5);
+      transition: opacity 0.4s;
+      background: var(--cream2);
+    }
+    .art-card:hover .art-thumb { opacity: 0.85; }
+    .art-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,23,32,0.72) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.4s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px 18px;
+    }
+    .art-card:hover .art-overlay { opacity: 1; }
+    .art-title {
+      font-family: var(--font-display); font-size: 1.15rem;
+      font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 4px;
+    }
+    .art-meta {
+      font-family: var(--font-body); font-size: 0.68rem;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.65);
+    }
+    .art-thumb img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .art-thumb::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg, transparent, transparent 14px,
+        rgba(255,255,255,0.08) 14px, rgba(255,255,255,0.08) 15px
+      );
+    }
+
+    /* ── LIGHTBOX ────────────────────────────────────────── */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(28,23,32,0.92);
+      backdrop-filter: blur(12px);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px;
+    }
+    #lightbox.open { display: flex; animation: fadeIn 0.4s var(--ease-out); }
+    .lightbox-content {
+      max-width: 700px; width: 100%; position: relative;
+      animation: scaleIn 0.4s var(--ease-out);
+    }
+    .lightbox-img-placeholder {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    .lightbox-info { padding: 24px 0 0; }
+    .lightbox-title {
+      font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 300; color: #fff; margin-bottom: 8px;
+    }
+    .lightbox-desc {
+      font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.65; white-space: pre-line;
+    }
+    .lightbox-close {
+      position: absolute; top: -16px; right: -16px;
+      width: 40px; height: 40px; background: var(--lavender3);
+      border: none; cursor: none; color: #fff;
+      font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .lightbox-close:hover { background: var(--lavender2); transform: rotate(90deg); }
+
+    /* ── WRITING ─────────────────────────────────────────── */
+    #blog {
+      padding: 100px clamp(24px, 6vw, 96px);
+      background: var(--cream2);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .blog-card {
+      background: var(--cream); overflow: hidden;
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+      cursor: none;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(139,111,196,0.18); }
+    .blog-img {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(100,80,130,0.5);
+      position: relative; overflow: hidden;
+    }
+    .blog-img img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .blog-card:hover .blog-img img { transform: scale(1.04); }
+    .blog-img-link { display: block; overflow: hidden; }
+    .blog-title-link { text-decoration: none; display: block; }
+    .blog-read {
+      font-family: var(--font-body); font-size: 0.72rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lavender3); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: gap 0.3s var(--ease-out), color 0.3s;
+      cursor: none;
+    }
+    .blog-read:hover { gap: 14px; color: var(--lavender2); }
+    .blog-body { padding: 28px 28px 32px; }
+    .blog-tag {
+      font-family: var(--font-body); font-size: 0.65rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--lavender3); margin-bottom: 10px;
+    }
+    .blog-title {
+      font-family: var(--font-display); font-size: 1.4rem;
+      font-weight: 400; line-height: 1.28; color: var(--ink2);
+      margin-bottom: 12px;
+      transition: color 0.3s;
+    }
+    .blog-card:hover .blog-title { color: var(--lavender3); }
+    .blog-excerpt {
+      font-size: 0.88rem; line-height: 1.7; color: var(--ink3);
+      margin-bottom: 20px;
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────── */
+    #contact {
+      padding: 120px clamp(24px, 6vw, 96px);
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: start;
+    }
+    .contact-text .section-title { margin-bottom: 24px; }
+    .contact-lead {
+      font-family: var(--font-display); font-size: 1.2rem;
+      font-style: italic; font-weight: 300; line-height: 1.65;
+      color: var(--ink3); margin-bottom: 40px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 16px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--font-body); font-size: 0.85rem; color: var(--ink3);
+      text-decoration: none; transition: color 0.3s;
+      cursor: none;
+    }
+    .contact-link:hover { color: var(--lavender3); }
+    .contact-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--cream2); border: 1.5px solid var(--parchment);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contact-link:hover .contact-icon { border-color: var(--lavender3); background: var(--lavender); }
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-field { display: flex; flex-direction: column; gap: 8px; }
+    .form-label {
+      font-family: var(--font-body); font-size: 0.7rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3);
+    }
+    .form-input, .form-textarea {
+      font-family: var(--font-body); font-size: 0.9rem; font-weight: 300;
+      color: var(--ink2); background: var(--cream2);
+      border: 1.5px solid var(--parchment);
+      padding: 14px 16px; outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--lavender3);
+      box-shadow: 0 0 0 4px rgba(139,111,196,0.1);
+    }
+    .form-textarea { min-height: 140px; }
+    .form-submit { align-self: flex-start; }
+    .form-success {
+      display: none; padding: 16px 24px;
+      background: rgba(168,196,162,0.2); border: 1.5px solid var(--sage2);
+      color: var(--sage2);
+      font-family: var(--font-body); font-size: 0.85rem;
+    }
+    .form-note {
+      font-family: var(--font-body); font-size: 0.75rem; color: var(--ink3);
+      opacity: 0.75;
+    }
+
     @media (max-width: 900px) {
       #hero { grid-template-columns: 1fr; }
       .hero-right { min-height: 320px; }
       .hero-scroll-hint { display: none; }
       #about { padding-left: 24px; padding-right: 24px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      #contact { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -138,9 +357,9 @@
   </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html" aria-current="page">Home</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="writing.html">Writing</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#blog">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -157,7 +376,7 @@
       "I make art the way light finds a way through stone — quietly, persistently, leaving something behind."
     </p>
     <div class="hero-ctas">
-      <a href="gallery.html" class="btn-primary">View Gallery ↗</a>
+      <a href="#gallery" class="btn-primary">View Gallery ↗</a>
       <a href="#about" class="btn-ghost">My Story</a>
     </div>
   </div>
@@ -190,8 +409,213 @@
     <p class="about-body reveal reveal-delay-4">
       I believe art doesn't need to explain itself. It only needs to make you feel less alone.
     </p>
-    <a href="contact.html" class="btn-primary reveal reveal-delay-4" style="margin-top:32px; display:inline-flex;">Work Together ↗</a>
+    <a href="#contact" class="btn-primary reveal reveal-delay-4" style="margin-top:32px; display:inline-flex;">Work Together ↗</a>
   </div>
+</section>
+
+<section id="gallery">
+  <div class="page-header reveal">
+    <p class="section-label">Selected Works</p>
+    <h2 class="section-title">The <em>Gallery</em></h2>
+    <p class="page-lede">Sculpture, painting, and drawing — a selection of recent work.</p>
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="sculpture">Sculpture</button>
+      <button class="filter-btn" data-filter="painting">Painting</button>
+      <button class="filter-btn" data-filter="drawing">Drawing</button>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="art-card reveal reveal-delay-1" data-category="drawing" onclick="openLightbox(0)">
+      <div class="art-thumb"><img src="uploads/Freedom1.jpeg" alt="Entangled" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Entangled</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(1)">
+      <div class="art-thumb"><img src="uploads/Freedom2.jpeg" alt="Metamorphosis" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Metamorphosis</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(2)">
+      <div class="art-thumb"><img src="uploads/Freedom3.jpeg" alt="Duality" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Duality</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(3)">
+      <div class="art-thumb"><img src="uploads/image:background.jpeg" alt="Fragments of Being" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Fragments of Being</div>
+        <div class="art-meta">Acrylic on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(4)">
+      <div class="art-thumb"><img src="uploads/IMG_0155.jpeg" alt="Grip" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Grip</div>
+        <div class="art-meta">Etching · 2022</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(5)">
+      <div class="art-thumb"><img src="uploads/IMG_2318.jpeg" alt="Liberation" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Liberation</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(6)">
+      <div class="art-thumb"><img src="uploads/IMG_0781 3..jpg" alt="Becoming" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Becoming</div>
+        <div class="art-meta">Oil &amp; Mixed Media · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="painting" onclick="openLightbox(7)">
+      <div class="art-thumb"><img src="uploads/IMG_0709 3.jpeg" alt="Overwhelmed" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Overwhelmed</div>
+        <div class="art-meta">Oil on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="sculpture" onclick="openLightbox(8)">
+      <div class="art-thumb"><img src="uploads/IMG_0064.jpeg" alt="Eye of the Storm" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Eye of the Storm</div>
+        <div class="art-meta">Mosaic · Ceramic Tiles · 2023</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(9)">
+      <div class="art-thumb"><img src="uploads/IMG_1897 2.jpg" alt="Resilience" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Resilience</div>
+        <div class="art-meta">Acrylic on Canvas · 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="page-header reveal">
+    <p class="section-label">Reflections</p>
+    <h2 class="section-title">Writing &amp; <em>Research</em></h2>
+    <p class="page-lede">Essays and research on Palestinian culture, craft, film, and art theory.</p>
+  </div>
+  <div class="blog-grid">
+    <article class="blog-card reveal reveal-delay-1">
+      <a href="erasing-history.html" class="blog-img-link" aria-label="Read: Erasing History">
+        <div class="blog-img"><img src="uploads/IMG_2318.jpeg" alt="Erasing History cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Palestinian Culture</p>
+        <a href="erasing-history.html" class="blog-title-link"><h3 class="blog-title">Erasing History: The War on Palestinian Culture</h3></a>
+        <p class="blog-excerpt">An examination of how cultural erasure operates alongside physical displacement — and why art becomes an act of survival and resistance.</p>
+        <a href="erasing-history.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-2">
+      <a href="third-cinema.html" class="blog-img-link" aria-label="Read: Third Cinema Theory">
+        <div class="blog-img"><img src="uploads/third-cinema-cover.jpg" alt="Third Cinema cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Film Theory</p>
+        <a href="third-cinema.html" class="blog-title-link"><h3 class="blog-title">Third Cinema Theory as an Act of Resistance</h3></a>
+        <p class="blog-excerpt">How Third Cinema — born in Latin America and embraced across the Global South — offers a framework for understanding Palestinian visual storytelling.</p>
+        <a href="third-cinema.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-3">
+      <a href="mushroom-textile.html" class="blog-img-link" aria-label="Read: Mushroom Textile">
+        <div class="blog-img"><img src="uploads/mushroom-bw.jpg" alt="Mushroom Textile cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Craft &amp; Sustainability</p>
+        <a href="mushroom-textile.html" class="blog-title-link"><h3 class="blog-title">Mushroom: Sustainable Textile Fiber</h3></a>
+        <p class="blog-excerpt">Exploring mycelium-based materials as an alternative to conventional textiles — sustainability, craft, and the future of making.</p>
+        <a href="mushroom-textile.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-1">
+      <a href="female-artisans.html" class="blog-img-link" aria-label="Read: Female Artisans">
+        <div class="blog-img"><img src="uploads/female-artisans-tatreez.jpg" alt="Female Artisans cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Craft Research</p>
+        <a href="female-artisans.html" class="blog-title-link"><h3 class="blog-title">Female Artisans in the Northern West Bank</h3></a>
+        <p class="blog-excerpt">A study of women craft practitioners in the Northern West Bank — their techniques, networks, and the cultural memory woven into every piece.</p>
+        <a href="female-artisans.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-2">
+      <a href="straw-weaving.html" class="blog-img-link" aria-label="Read: Straw Weaving">
+        <div class="blog-img"><img src="uploads/straw-weaving-cover.jpg" alt="Straw Weaving cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Craft Research</p>
+        <a href="straw-weaving.html" class="blog-title-link"><h3 class="blog-title">Expanded Study with a Focus on Straw Weaving</h3></a>
+        <p class="blog-excerpt">An in-depth exploration of straw weaving as both a traditional Palestinian craft and a living practice of cultural preservation.</p>
+        <a href="straw-weaving.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-3">
+      <a href="montage-reality.html" class="blog-img-link" aria-label="Read: Montage Reality">
+        <div class="blog-img"><img src="uploads/montage-image1.jpeg" alt="Montage Reality cover" /></div>
+      </a>
+      <div class="blog-body">
+        <p class="blog-tag">Film &amp; Art Theory</p>
+        <a href="montage-reality.html" class="blog-title-link"><h3 class="blog-title">When the Imagination of Montage Becomes Reality</h3></a>
+        <p class="blog-excerpt">On the collision between cinematic montage theory and lived experience — when the cuts between images stop being metaphors and become facts of daily life.</p>
+        <a href="montage-reality.html" class="blog-read">Read essay →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-text reveal">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Let's <em>Connect</em></h2>
+    <p class="contact-lead">
+      Whether you're interested in a commission, an exhibition, or simply want to talk about art — I'd love to hear from you.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:nataliekhalmasri@gmail.com" class="contact-link">
+        <span class="contact-icon">✉</span>
+        nataliekhalmasri@gmail.com
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">📷</span>
+        @nataliealmasri
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">in</span>
+        Natalie Almasri
+      </a>
+    </div>
+  </div>
+  <form class="contact-form reveal reveal-delay-2" id="contactForm">
+    <div class="form-field">
+      <label class="form-label" for="name">Your Name</label>
+      <input class="form-input" type="text" id="name" placeholder="e.g. Sara Hassan" required />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="email">Email Address</label>
+      <input class="form-input" type="email" id="email" placeholder="sara@example.com" required />
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="message">Your Message</label>
+      <textarea class="form-textarea" id="message" placeholder="Tell me about your project, or just say hello..." required></textarea>
+    </div>
+    <p class="form-note">This opens your email app with your message pre-filled, addressed to nataliekhalmasri@gmail.com.</p>
+    <div class="form-success" id="formSuccess">
+      ✓ Your email app should now be open with your message ready to send.
+    </div>
+    <button type="submit" class="btn-primary form-submit">Send Message ↗</button>
+  </form>
 </section>
 
 <footer>
@@ -203,6 +627,19 @@
     <a href="mailto:nataliekhalmasri@gmail.com" class="social-link" title="Email">✉</a>
   </div>
 </footer>
+
+<div id="lightbox" role="dialog" aria-modal="true">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+    <div class="lightbox-img-placeholder" id="lightboxImg" style="background:var(--cream2);">
+      <span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(100,80,130,0.4)">Artwork Preview</span>
+    </div>
+    <div class="lightbox-info">
+      <div class="lightbox-title" id="lightboxTitle"></div>
+      <div class="lightbox-desc" id="lightboxDesc"></div>
+    </div>
+  </div>
+</div>
 
 <script src="assets/site.js"></script>
 <script>
@@ -225,6 +662,72 @@
     }
   }
   spawnParticles();
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.art-card').forEach(card => {
+        const show = f === 'all' || card.dataset.category === f;
+        card.style.opacity = show ? '1' : '0.25';
+        card.style.pointerEvents = show ? 'auto' : 'none';
+      });
+    });
+  });
+
+  const artworks = [
+    { title: 'Entangled', desc: 'Etching · 2023\nA figure wrapped in rope, both bound and held together by it. On the paradox of things that constrain us also giving us form.', img: 'uploads/Freedom1.jpeg' },
+    { title: 'Metamorphosis', desc: 'Etching · 2023\nTwo faces sharing one body, butterflies passing between them — on the transformation that happens when you learn to see yourself twice.', img: 'uploads/Freedom2.jpeg' },
+    { title: 'Duality', desc: 'Etching · 2023\nA face split between silence and speech. The woman who laughs while the other watches. On the selves we carry simultaneously.', img: 'uploads/Freedom3.jpeg' },
+    { title: 'Fragments of Being', desc: 'Acrylic on 9 Canvases · 2024\nA face assembled across nine separate panels — identity as something that must be pieced together, never whole from a single vantage point.', img: 'uploads/image:background.jpeg' },
+    { title: 'Grip', desc: 'Etching · 2022\nA massive hand holding a tiny human figure. On powerlessness, control, and the strange intimacy of being held against your will.', img: 'uploads/IMG_0155.jpeg' },
+    { title: 'Liberation', desc: 'Etching · 2023\nBirds erupting from a woman\'s head like thoughts finally given permission to leave. On the moment something becomes too large to keep inside.', img: 'uploads/IMG_2318.jpeg' },
+    { title: 'Becoming', desc: 'Oil & Mixed Media · 2024\nA silhouette crowned with butterflies in autumn colours, embroidered patterns trailing her robe. On the quiet becoming that happens when no one is watching.', img: 'uploads/IMG_0781 3..jpg' },
+    { title: 'Overwhelmed', desc: 'Oil on Canvas · 2024\nA small figure draped over the edge of an enormous coffee cup. On ordinary objects that contain the entirety of our exhaustion.', img: 'uploads/IMG_0709 3.jpeg' },
+    { title: 'Eye of the Storm', desc: 'Mosaic · Ceramic Tiles · 2023\nA head built from broken ceramic fragments — blue sea, red crescent, grey sky. On assembling a self from shattered material, piece by piece.', img: 'uploads/IMG_0064.jpeg' },
+    { title: 'Resilience', desc: 'Acrylic on 4 Canvases · 2022\nA daisy in full bloom against an uncompromising black — the insistence of softness in a hard world. The flower that keeps opening anyway.', img: 'uploads/IMG_1897 2.jpg' }
+  ];
+  function openLightbox(i) {
+    const lb = document.getElementById('lightbox');
+    const art = artworks[i];
+    const imgEl = document.getElementById('lightboxImg');
+    imgEl.style.background = '#1C1720';
+    imgEl.innerHTML = art.img
+      ? `<img src="${art.img}" alt="${art.title}" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      : `<span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3)">Artwork Preview</span>`;
+    document.getElementById('lightboxTitle').textContent = art.title;
+    document.getElementById('lightboxDesc').textContent = art.desc;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lightbox').addEventListener('click', function (e) {
+    if (e.target === this) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent('Website message from ' + name);
+    const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = `mailto:nataliekhalmasri@gmail.com?subject=${subject}&body=${body}`;
+
+    const success = document.getElementById('formSuccess');
+    success.style.display = 'block';
+    e.target.querySelector('button[type=submit]').style.display = 'none';
+    setTimeout(() => {
+      e.target.reset();
+      success.style.display = 'none';
+      e.target.querySelector('button[type=submit]').style.display = 'inline-flex';
+    }, 5000);
+  });
 </script>
 </body>
 </html>
