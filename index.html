@@ -11,6 +11,15 @@
   <link rel="stylesheet" href="assets/site.css" />
 
   <style>
+    /* ── FULL-PAGE SCROLL SNAP ───────────────────────────── */
+    html {
+      scroll-snap-type: y mandatory;
+    }
+    #hero, #about {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
     /* ── HERO ────────────────────────────────────────────── */
     #hero {
       min-height: 100svh;
@@ -87,9 +96,10 @@
 
     /* ── ABOUT ───────────────────────────────────────────── */
     #about {
-      padding: 120px clamp(24px, 6vw, 96px);
+      min-height: 100svh;
+      padding: calc(var(--nav-h) + 48px) clamp(24px, 6vw, 96px) 64px;
       background: var(--cream2);
-      display: flex; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
     .about-text { max-width: 760px; text-align: center; }
     .about-text .about-lead { border-left: none; padding-left: 0; max-width: 620px; margin-left: auto; margin-right: auto; }
