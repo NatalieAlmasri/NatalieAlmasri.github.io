@@ -16,13 +16,20 @@
 })();
 
 // ── NAVBAR SCROLL ───────────────────────────────────────────
-// The header stays visible at all times; scrolling only toggles its
-// translucent/blurred background once the page has scrolled past the top.
+// Hides the header while scrolling down, reveals it again on scroll up
+// (or near the top of the page).
 (function () {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
+  let lastY = window.scrollY;
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    const navLinks = document.getElementById('navLinks');
+    const menuOpen = navLinks && navLinks.classList.contains('open');
+    if (!menuOpen && y > 140 && y > lastY + 6) navbar.classList.add('nav-hidden');
+    else if (y < lastY - 6 || y <= 140) navbar.classList.remove('nav-hidden');
+    lastY = y;
   }, { passive: true });
 })();
 
