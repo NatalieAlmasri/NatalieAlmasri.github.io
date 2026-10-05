@@ -155,6 +155,8 @@
       font-family: var(--font-body); font-size: 0.68rem;
       letter-spacing: 0.1em; color: rgba(255,255,255,0.65);
     }
+    .art-card--plain .art-thumb { background: #fff; }
+    .art-card--plain .art-thumb img { object-fit: contain; padding: 4%; }
     .art-thumb img {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; display: block;
@@ -418,10 +420,10 @@
   <div class="page-header reveal">
     <p class="section-label">Selected Works</p>
     <h2 class="section-title">The <em>Gallery</em></h2>
-    <p class="page-lede">Sculpture, painting, and drawing, a selection of recent work.</p>
+    <p class="page-lede">Ceramic, painting, and drawing, a selection of recent work.</p>
     <div class="gallery-filters">
       <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="sculpture">Sculpture</button>
+      <button class="filter-btn" data-filter="ceramic">Ceramic</button>
       <button class="filter-btn" data-filter="painting">Painting</button>
       <button class="filter-btn" data-filter="drawing">Drawing</button>
     </div>
@@ -483,7 +485,7 @@
         <div class="art-meta">Oil on Canvas · 2024</div>
       </div>
     </div>
-    <div class="art-card reveal reveal-delay-3" data-category="sculpture" onclick="openLightbox(8)">
+    <div class="art-card reveal reveal-delay-3" data-category="ceramic" onclick="openLightbox(8)">
       <div class="art-thumb"><img src="uploads/IMG_0064.jpeg" alt="Eye of the Storm" /></div>
       <div class="art-overlay">
         <div class="art-title">Eye of the Storm</div>
@@ -496,6 +498,27 @@
         <div class="art-title">Resilience</div>
         <div class="art-meta">Acrylic on Canvas · 2022</div>
       </div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(10)">
+      <div class="art-thumb"><img src="uploads/ceramic-1.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-2" data-category="ceramic" onclick="openLightbox(11)">
+      <div class="art-thumb"><img src="uploads/ceramic-2.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-3" data-category="ceramic" onclick="openLightbox(12)">
+      <div class="art-thumb"><img src="uploads/ceramic-3.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(13)">
+      <div class="art-thumb"><img src="uploads/ceramic-4.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-2" data-category="ceramic" onclick="openLightbox(14)">
+      <div class="art-thumb"><img src="uploads/ceramic-5.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-3" data-category="ceramic" onclick="openLightbox(15)">
+      <div class="art-thumb"><img src="uploads/ceramic-6.jpg" alt="Ceramic artwork" loading="lazy" /></div>
+    </div>
+    <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(16)">
+      <div class="art-thumb"><img src="uploads/ceramic-7.jpg" alt="Ceramic artwork" loading="lazy" /></div>
     </div>
   </div>
 </section>
@@ -729,7 +752,14 @@
     { title: 'Becoming', desc: 'Oil & Mixed Media · 2024\nA silhouette crowned with butterflies in autumn colours, embroidered patterns trailing her robe. On the quiet becoming that happens when no one is watching.', img: 'uploads/IMG_0781 3..jpg' },
     { title: 'Overwhelmed', desc: 'Oil on Canvas · 2024\nA small figure draped over the edge of an enormous coffee cup. On ordinary objects that contain the entirety of our exhaustion.', img: 'uploads/IMG_0709 3.jpeg' },
     { title: 'Eye of the Storm', desc: 'Mosaic · Ceramic Tiles · 2023\nA head built from broken ceramic fragments, blue sea, red crescent, grey sky. On assembling a self from shattered material, piece by piece.', img: 'uploads/IMG_0064.jpeg' },
-    { title: 'Resilience', desc: 'Acrylic on 4 Canvases · 2022\nA daisy in full bloom against an uncompromising black, the insistence of softness in a hard world. The flower that keeps opening anyway.', img: 'uploads/IMG_1897 2.jpg' }
+    { title: 'Resilience', desc: 'Acrylic on 4 Canvases · 2022\nA daisy in full bloom against an uncompromising black, the insistence of softness in a hard world. The flower that keeps opening anyway.', img: 'uploads/IMG_1897 2.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-1.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-2.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-3.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-4.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-5.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-6.jpg' },
+    { title: '', desc: '', img: 'uploads/ceramic-7.jpg' }
   ];
   function openLightbox(i) {
     const lb = document.getElementById('lightbox');
@@ -737,10 +767,11 @@
     const imgEl = document.getElementById('lightboxImg');
     imgEl.style.background = '#1C1720';
     imgEl.innerHTML = art.img
-      ? `<img src="${art.img}" alt="${art.title}" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      ? `<img src="${art.img}" alt="${art.title || 'Ceramic artwork'}" style="width:100%;height:100%;object-fit:contain;display:block;" />`
       : `<span style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3)">Artwork Preview</span>`;
     document.getElementById('lightboxTitle').textContent = art.title;
     document.getElementById('lightboxDesc').textContent = art.desc;
+    document.querySelector('.lightbox-info').style.display = (art.title || art.desc) ? '' : 'none';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
