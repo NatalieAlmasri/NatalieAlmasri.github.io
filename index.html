@@ -204,6 +204,18 @@
     }
     .lightbox-close:hover { background: var(--lavender2); transform: rotate(90deg); }
 
+    /* ── EXHIBITIONS ─────────────────────────────────────── */
+    #exhibitions {
+      padding: 56px clamp(24px, 6vw, 96px) 0;
+      background: var(--cream2);
+    }
+    #exhibitions + #blog { padding-top: 72px; }
+    #exhibitions .blog-card { cursor: default; }
+    #exhibitions .blog-card:hover .blog-title { color: var(--ink2); }
+    #exhibitions .blog-card:hover .blog-img img { transform: none; }
+    #exhibitions .blog-img { height: 240px; }
+    #exhibitions .blog-excerpt { margin-bottom: 0; }
+
     /* ── WRITING ─────────────────────────────────────────── */
     #blog {
       padding: 56px clamp(24px, 6vw, 96px);
@@ -347,6 +359,7 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html" aria-current="page">Home</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#exhibitions">Exhibitions</a></li>
     <li><a href="#blog">Writings and Research</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -483,6 +496,39 @@
         <div class="art-meta">Acrylic on Canvas · 2022</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="exhibitions">
+  <div class="page-header reveal">
+    <p class="section-label">On Show</p>
+    <h2 class="section-title"><em>Exhibitions</em></h2>
+  </div>
+  <div class="blog-grid">
+    <article class="blog-card reveal reveal-delay-1">
+      <div class="blog-img"><img src="uploads/exhibition-imperishable.jpg" alt="Imperishable, ceramic sculptures" /></div>
+      <div class="blog-body">
+        <p class="blog-tag">Exhibition · 2022</p>
+        <h3 class="blog-title">Imperishable</h3>
+        <p class="blog-excerpt">Spazio Punch, Venice (Giudecca), Italy<br>Ceramic</p>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-2">
+      <div class="blog-img"><img src="uploads/exhibition-something-poetic.jpg" alt="Something Poetic, Something Politic, mixed media installation" /></div>
+      <div class="blog-body">
+        <p class="blog-tag">Exhibition · 2021</p>
+        <h3 class="blog-title">Something Poetic, Something Politic</h3>
+        <p class="blog-excerpt">Iuav University, Venice, Italy<br>Mixed media</p>
+      </div>
+    </article>
+    <article class="blog-card reveal reveal-delay-3">
+      <div class="blog-img"><img src="uploads/exhibition-re-blossom.jpg" alt="Not My Chosen Road at the RE-BLOSSOM Exhibition" /></div>
+      <div class="blog-body">
+        <p class="blog-tag">Exhibition · 2020</p>
+        <h3 class="blog-title">Not My Chosen Road</h3>
+        <p class="blog-excerpt">RE-BLOSSOM Exhibition, Numeroventi, Florence, Italy<br>Acrylic on canvas and etching</p>
+      </div>
+    </article>
   </div>
 </section>
 
