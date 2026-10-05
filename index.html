@@ -121,6 +121,7 @@
       gap: 16px;
       margin-top: 48px;
     }
+    .gallery-grid .cat-start { grid-column-start: 1; }
     .art-card {
       aspect-ratio: 1 / 1;
       position: relative; overflow: hidden;
@@ -421,83 +422,20 @@
   <div class="page-header reveal">
     <p class="section-label">Selected Works</p>
     <h2 class="section-title">The <em>Gallery</em></h2>
-    <p class="page-lede">Ceramic, painting, and drawing, a selection of recent work.</p>
+    <p class="page-lede">Ceramic, painting, and etching, a selection of recent work.</p>
     <div class="gallery-filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="ceramic">Ceramic</button>
       <button class="filter-btn" data-filter="painting">Painting</button>
-      <button class="filter-btn" data-filter="drawing">Drawing</button>
+      <button class="filter-btn" data-filter="etching">Etching</button>
     </div>
   </div>
   <div class="gallery-grid">
-    <div class="art-card reveal reveal-delay-1" data-category="drawing" onclick="openLightbox(0)">
-      <div class="art-thumb"><img src="uploads/Freedom1.jpeg" alt="Trapped" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Trapped</div>
-        <div class="art-meta">Etching · 2025</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(1)">
-      <div class="art-thumb"><img src="uploads/Freedom2.jpeg" alt="Beautiful Mind Inside" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Beautiful Mind Inside</div>
-        <div class="art-meta">Etching · 2026</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(2)">
-      <div class="art-thumb"><img src="uploads/Freedom3.jpeg" alt="Trying to Escape" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Trying to Escape</div>
-        <div class="art-meta">Etching · 2025</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(3)">
-      <div class="art-thumb"><img src="uploads/image:background.jpeg" alt="Fragments of Being" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Fragments of Being</div>
-        <div class="art-meta">Acrylic on Canvas · 2024</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-2" data-category="drawing" onclick="openLightbox(4)">
-      <div class="art-thumb"><img src="uploads/IMG_0155.jpeg" alt="Grip" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Grip</div>
-        <div class="art-meta">Etching · 2022</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-3" data-category="drawing" onclick="openLightbox(5)">
-      <div class="art-thumb"><img src="uploads/IMG_2318.jpeg" alt="Liberation" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Liberation</div>
-        <div class="art-meta">Etching · 2023</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(6)">
-      <div class="art-thumb"><img src="uploads/IMG_0781 3..jpg" alt="Becoming" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Becoming</div>
-        <div class="art-meta">Oil &amp; Mixed Media · 2024</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-2" data-category="painting" onclick="openLightbox(7)">
-      <div class="art-thumb"><img src="uploads/IMG_0709 3.jpeg" alt="Overwhelmed" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Overwhelmed</div>
-        <div class="art-meta">Oil on Canvas · 2024</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-3" data-category="ceramic" onclick="openLightbox(8)">
+    <div class="art-card cat-start reveal reveal-delay-3" data-category="ceramic" onclick="openLightbox(8)">
       <div class="art-thumb"><img src="uploads/IMG_0064.jpeg" alt="Eye of the Storm" /></div>
       <div class="art-overlay">
         <div class="art-title">Eye of the Storm</div>
         <div class="art-meta">Mosaic · Ceramic Tiles · 2023</div>
-      </div>
-    </div>
-    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(9)">
-      <div class="art-thumb"><img src="uploads/IMG_1897 2.jpg" alt="Resilience" /></div>
-      <div class="art-overlay">
-        <div class="art-title">Resilience</div>
-        <div class="art-meta">Acrylic on Canvas · 2022</div>
       </div>
     </div>
     <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(10)">
@@ -521,8 +459,71 @@
     <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(16)">
       <div class="art-thumb"><img src="uploads/ceramic-7.jpg" alt="Ceramic artwork" loading="lazy" /></div>
     </div>
+    <div class="art-card cat-start reveal reveal-delay-1" data-category="painting" onclick="openLightbox(3)">
+      <div class="art-thumb"><img src="uploads/image:background.jpeg" alt="Fragments of Being" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Fragments of Being</div>
+        <div class="art-meta">Acrylic on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(6)">
+      <div class="art-thumb"><img src="uploads/IMG_0781 3..jpg" alt="Becoming" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Becoming</div>
+        <div class="art-meta">Oil &amp; Mixed Media · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="painting" onclick="openLightbox(7)">
+      <div class="art-thumb"><img src="uploads/IMG_0709 3.jpeg" alt="Overwhelmed" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Overwhelmed</div>
+        <div class="art-meta">Oil on Canvas · 2024</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-1" data-category="painting" onclick="openLightbox(9)">
+      <div class="art-thumb"><img src="uploads/IMG_1897 2.jpg" alt="Resilience" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Resilience</div>
+        <div class="art-meta">Acrylic on Canvas · 2022</div>
+      </div>
+    </div>
     <div class="art-card art-card--fit reveal reveal-delay-2" data-category="painting" onclick="openLightbox(17)">
       <div class="art-thumb"><img src="uploads/painting-2899.jpg" alt="Painting" loading="lazy" /></div>
+    </div>
+    <div class="art-card cat-start reveal reveal-delay-1" data-category="etching" onclick="openLightbox(0)">
+      <div class="art-thumb"><img src="uploads/Freedom1.jpeg" alt="Trapped" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Trapped</div>
+        <div class="art-meta">Etching · 2025</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="etching" onclick="openLightbox(1)">
+      <div class="art-thumb"><img src="uploads/Freedom2.jpeg" alt="Beautiful Mind Inside" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Beautiful Mind Inside</div>
+        <div class="art-meta">Etching · 2026</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="etching" onclick="openLightbox(2)">
+      <div class="art-thumb"><img src="uploads/Freedom3.jpeg" alt="Trying to Escape" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Trying to Escape</div>
+        <div class="art-meta">Etching · 2025</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-2" data-category="etching" onclick="openLightbox(4)">
+      <div class="art-thumb"><img src="uploads/IMG_0155.jpeg" alt="Grip" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Grip</div>
+        <div class="art-meta">Etching · 2022</div>
+      </div>
+    </div>
+    <div class="art-card reveal reveal-delay-3" data-category="etching" onclick="openLightbox(5)">
+      <div class="art-thumb"><img src="uploads/IMG_2318.jpeg" alt="Liberation" /></div>
+      <div class="art-overlay">
+        <div class="art-title">Liberation</div>
+        <div class="art-meta">Etching · 2023</div>
+      </div>
     </div>
   </div>
 </section>
