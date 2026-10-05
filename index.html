@@ -210,11 +210,12 @@
       background: var(--cream2);
     }
     #exhibitions + #blog { padding-top: 72px; }
-    #exhibitions .blog-card { cursor: default; }
-    #exhibitions .blog-card:hover .blog-title { color: var(--ink2); }
-    #exhibitions .blog-card:hover .blog-img img { transform: none; }
+    #exhibitions .blog-card:not(:has(.blog-read)) { cursor: default; }
+    #exhibitions .blog-card:not(:has(.blog-read)):hover .blog-title { color: var(--ink2); }
+    #exhibitions .blog-card:not(:has(.blog-read)):hover .blog-img img { transform: none; }
     #exhibitions .blog-img { height: 240px; }
     #exhibitions .blog-excerpt { margin-bottom: 0; }
+    #exhibitions .blog-excerpt:has(+ .blog-read) { margin-bottom: 20px; }
 
     /* ── WRITING ─────────────────────────────────────────── */
     #blog {
@@ -522,11 +523,14 @@
       </div>
     </article>
     <article class="blog-card reveal reveal-delay-3">
-      <div class="blog-img"><img src="uploads/exhibition-re-blossom.jpg" alt="Not My Chosen Road at the RE-BLOSSOM Exhibition" /></div>
+      <a href="re-blossom.html" class="blog-img-link" aria-label="View: RE-BLOSSOM Exhibition">
+        <div class="blog-img"><img src="uploads/exhibition-re-blossom.jpg" alt="Not My Chosen Road at the RE-BLOSSOM Exhibition" /></div>
+      </a>
       <div class="blog-body">
-        <p class="blog-tag">Exhibition · 2020</p>
-        <h3 class="blog-title">Not My Chosen Road</h3>
+        <p class="blog-tag">Exhibition · 2021</p>
+        <a href="re-blossom.html" class="blog-title-link"><h3 class="blog-title">Not My Chosen Road</h3></a>
         <p class="blog-excerpt">RE-BLOSSOM Exhibition, Numeroventi, Florence, Italy<br>Acrylic on canvas and etching</p>
+        <a href="re-blossom.html" class="blog-read">View exhibition →</a>
       </div>
     </article>
   </div>
