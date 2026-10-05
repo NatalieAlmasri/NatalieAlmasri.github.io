@@ -155,6 +155,7 @@
       font-family: var(--font-body); font-size: 0.68rem;
       letter-spacing: 0.1em; color: rgba(255,255,255,0.65);
     }
+    .art-card--fit .art-thumb img { object-fit: contain; }
     .art-card--plain .art-thumb { background: #fff; }
     .art-card--plain .art-thumb img { object-fit: contain; padding: 4%; }
     .art-thumb img {
@@ -520,6 +521,9 @@
     <div class="art-card art-card--plain reveal reveal-delay-1" data-category="ceramic" onclick="openLightbox(16)">
       <div class="art-thumb"><img src="uploads/ceramic-7.jpg" alt="Ceramic artwork" loading="lazy" /></div>
     </div>
+    <div class="art-card art-card--fit reveal reveal-delay-2" data-category="painting" onclick="openLightbox(17)">
+      <div class="art-thumb"><img src="uploads/painting-2899.jpg" alt="Painting" loading="lazy" /></div>
+    </div>
   </div>
 </section>
 
@@ -762,7 +766,8 @@
     { title: '', desc: '', img: 'uploads/ceramic-4.jpg' },
     { title: '', desc: '', img: 'uploads/ceramic-5.jpg' },
     { title: '', desc: '', img: 'uploads/ceramic-6.jpg' },
-    { title: '', desc: '', img: 'uploads/ceramic-7.jpg' }
+    { title: '', desc: '', img: 'uploads/ceramic-7.jpg' },
+    { title: '', desc: '', img: 'uploads/painting-2899.jpg' }
   ];
   function openLightbox(i) {
     const lb = document.getElementById('lightbox');
