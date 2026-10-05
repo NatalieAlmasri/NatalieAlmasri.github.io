@@ -122,6 +122,11 @@ nav#navbar.scrolled {
 .nav-links a:hover::after { transform: scaleX(1); }
 .nav-links a[aria-current="page"] { color: var(--lavender3); }
 .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+@media (min-width: 901px) and (max-width: 1240px) {
+  .nav-logo, .nav-links { left: max(25%, 285px); }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 0.72rem; }
+}
 .nav-hamburger { display: none; cursor: pointer; grid-column: 3; justify-self: end; }
 
 /* ── SECTION COMMONS ────────────────────────────────── */
