@@ -69,8 +69,17 @@
     .postcard a{display:block;aspect-ratio:2/3;background:var(--cream2);overflow:hidden;box-shadow:0 12px 32px rgba(28,23,32,0.14);}
     .postcard img{width:100%;height:100%;object-fit:contain;display:block;transition:transform 0.5s var(--ease-out);}
     .postcard a:hover img{transform:scale(1.03);}
+    .postcard a{cursor:zoom-in;}
+    .pc-viewer{position:fixed;inset:0;z-index:100;background:rgba(28,23,32,0.92);display:none;align-items:center;justify-content:center;padding:56px clamp(16px,4vw,48px) 24px;overflow:auto;}
+    .pc-viewer.open{display:flex;}
+    .pc-pages{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;margin:auto;}
+    .pc-pages img{display:block;max-width:100%;height:auto;max-height:78vh;width:auto;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+    .pc-btn{position:fixed;background:rgba(250,247,242,0.12);color:#fff;border:none;width:44px;height:44px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.3s;}
+    .pc-btn:hover{background:var(--lavender3);}
+    .pc-close{top:max(12px,env(safe-area-inset-top));right:16px;}
+    .pc-prev{left:12px;top:50%;transform:translateY(-50%);}
+    .pc-next{right:12px;top:50%;transform:translateY(-50%);}
     .postcard figcaption{display:flex;flex-direction:column;gap:4px;padding-top:14px;}
-    .pc-num{font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender3);}
     .pc-title{font-family:var(--font-display);font-size:1.3rem;line-height:1.2;color:var(--ink2);}
     .pc-text{font-family:var(--font-body);font-size:0.85rem;line-height:1.6;color:var(--ink3);}
     .photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;margin-top:24px;}
@@ -124,39 +133,46 @@
     <h2 class="article-h2">Postcards</h2>
     <div class="postcard-grid">
       <figure class="postcard">
-        <a href="uploads/postcard-1.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-1.jpg" alt="Postcard 1, Al Manara Clock Tower, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">1</span><span class="pc-title">Al Manara Clock Tower</span><span class="pc-text">Located in the middle of the central square in the Old City of Nablus, it was built in 1901.</span></figcaption>
+        <a href="uploads/postcard-1.jpg" data-pc="1"><img src="uploads/postcard-1.jpg" alt="Postcard 1, Al Manara Clock Tower, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Al Manara Clock Tower</span><span class="pc-text">Located in the middle of the central square in the Old City of Nablus, it was built in 1901.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-2.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-2.jpg" alt="Postcard 2, Hisham’s Palace, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">2</span><span class="pc-title">Hisham’s Palace</span><span class="pc-text">Early Islamic archaeological site in Jericho, it was established by Hisham ben AbdulMalek in the 8th century.</span></figcaption>
+        <a href="uploads/postcard-2.jpg" data-pc="2"><img src="uploads/postcard-2.jpg" alt="Postcard 2, Hisham’s Palace, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Hisham’s Palace</span><span class="pc-text">Early Islamic archaeological site in Jericho, it was established by Hisham ben AbdulMalek in the 8th century.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-3.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-3.jpg" alt="Postcard 3, Petra, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">3</span><span class="pc-title">Petra</span><span class="pc-text">The capital of the Nabateans, and the center of an Arab kingdom in Hellenistic and Roman times.</span></figcaption>
+        <a href="uploads/postcard-3.jpg" data-pc="3"><img src="uploads/postcard-3.jpg" alt="Postcard 3, Petra, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Petra</span><span class="pc-text">The capital of the Nabateans, and the center of an Arab kingdom in Hellenistic and Roman times.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-4.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-4.jpg" alt="Postcard 4, The Brandenburg Gate, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">4</span><span class="pc-title">The Brandenburg Gate</span><span class="pc-text">Constructed between 1788 and 1791, it was Berlin’s first Greek revival building.</span></figcaption>
+        <a href="uploads/postcard-4.jpg" data-pc="4"><img src="uploads/postcard-4.jpg" alt="Postcard 4, The Brandenburg Gate, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">The Brandenburg Gate</span><span class="pc-text">Constructed between 1788 and 1791, it was Berlin’s first Greek revival building.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-5.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-5.jpg" alt="Postcard 5, Piazza San Marco, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">5</span><span class="pc-title">Piazza San Marco</span><span class="pc-text">Located in the heart of Venice, it was established during the ninth century, but adopted its current size and form in 1177.</span></figcaption>
+        <a href="uploads/postcard-5.jpg" data-pc="5"><img src="uploads/postcard-5.jpg" alt="Postcard 5, Piazza San Marco, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Piazza San Marco</span><span class="pc-text">Located in the heart of Venice, it was established during the ninth century, but adopted its current size and form in 1177.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-6.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-6.jpg" alt="Postcard 6, The Florence Duomo, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">6</span><span class="pc-title">The Florence Duomo</span><span class="pc-text">Also known as Santa Maria del Fiore Cathedral, it is an Italian Gothic masterpiece. Its construction began at the end of the 13th century.</span></figcaption>
+        <a href="uploads/postcard-6.jpg" data-pc="6"><img src="uploads/postcard-6.jpg" alt="Postcard 6, The Florence Duomo, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">The Florence Duomo</span><span class="pc-text">Also known as Santa Maria del Fiore Cathedral, it is an Italian Gothic masterpiece. Its construction began at the end of the 13th century.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-7.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-7.jpg" alt="Postcard 7, Lod Airport, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">7</span><span class="pc-title">Lod Airport</span><span class="pc-text">Was opened in 1936, it is located in the North of the city of Lod. After 1948 it was renamed Ben Gurion Airport.</span></figcaption>
+        <a href="uploads/postcard-7.jpg" data-pc="7"><img src="uploads/postcard-7.jpg" alt="Postcard 7, Lod Airport, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Lod Airport</span><span class="pc-text">Was opened in 1936, it is located in the North of the city of Lod. After 1948 it was renamed Ben Gurion Airport.</span></figcaption>
       </figure>
       <figure class="postcard">
-        <a href="uploads/postcard-8.jpg" target="_blank" rel="noopener"><img src="uploads/postcard-8.jpg" alt="Postcard 8, Gaza International Airport, etching" loading="lazy" /></a>
-        <figcaption><span class="pc-num">8</span><span class="pc-title">Gaza International Airport</span><span class="pc-text">Or Yasser Arafat International Airport, was opened in 1998 and destroyed in 2001 by Israeli heavy missile strikes during the 2nd Intifada.</span></figcaption>
+        <a href="uploads/postcard-8.jpg" data-pc="8"><img src="uploads/postcard-8.jpg" alt="Postcard 8, Gaza International Airport, etching" loading="lazy" /></a>
+        <figcaption><span class="pc-title">Gaza International Airport</span><span class="pc-text">Or Yasser Arafat International Airport, was opened in 1998 and destroyed in 2001 by Israeli heavy missile strikes during the 2nd Intifada.</span></figcaption>
       </figure>
     </div>
   </section>
+
+  <div class="pc-viewer" id="pcViewer" role="dialog" aria-modal="true" aria-label="Postcard front and back">
+    <button class="pc-btn pc-close" id="pcClose" aria-label="Close">✕</button>
+    <button class="pc-btn pc-prev" id="pcPrev" aria-label="Previous postcard">‹</button>
+    <div class="pc-pages" id="pcPages"></div>
+    <button class="pc-btn pc-next" id="pcNext" aria-label="Next postcard">›</button>
+  </div>
 
   <script>
   (function () {
@@ -173,6 +189,35 @@
         lastY = y; ticking = false;
       });
     }, { passive: true });
+  })();
+  </script>
+  <script>
+  (function () {
+    var viewer = document.getElementById('pcViewer');
+    var pages = document.getElementById('pcPages');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.postcard a[data-pc]'));
+    var cur = 0;
+    function show(i) {
+      cur = (i + cards.length) % cards.length;
+      var k = cards[cur].getAttribute('data-pc');
+      var t = cards[cur].querySelector('img').alt.replace(/^Postcard \d+, /, '').replace(/, etching$/, '');
+      pages.innerHTML = '<img src="uploads/postcard-' + k + '.jpg" alt="' + t + ', front" />' +
+                        '<img src="uploads/postcard-' + k + '-back.jpg" alt="' + t + ', back" />';
+      viewer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() { viewer.classList.remove('open'); document.body.style.overflow = ''; }
+    cards.forEach(function (a, i) { a.addEventListener('click', function (e) { e.preventDefault(); show(i); }); });
+    document.getElementById('pcClose').addEventListener('click', close);
+    document.getElementById('pcPrev').addEventListener('click', function () { show(cur - 1); });
+    document.getElementById('pcNext').addEventListener('click', function () { show(cur + 1); });
+    viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!viewer.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(cur - 1);
+      else if (e.key === 'ArrowRight') show(cur + 1);
+    });
   })();
   </script>
 </body>
